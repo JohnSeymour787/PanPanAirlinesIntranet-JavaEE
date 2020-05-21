@@ -50,7 +50,7 @@ public class Flightcrew implements Serializable
     private Integer id;
     @JoinColumn(name = "EMPLOYEEID", referencedColumnName = "EMPLOYEEID")
     @ManyToOne(optional = false)
-    private Employeees employeeid;
+    private Employee employeeid;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "crewid")
     private Collection<Scheduledflight> scheduledflightCollection;
 
@@ -89,12 +89,12 @@ public class Flightcrew implements Serializable
         this.id = id;
     }
 
-    public Employeees getEmployeeid()
+    public Employee getEmployeeid()
     {
         return employeeid;
     }
 
-    public void setEmployeeid(Employeees employeeid)
+    public void setEmployeeid(Employee employeeid)
     {
         this.employeeid = employeeid;
     }

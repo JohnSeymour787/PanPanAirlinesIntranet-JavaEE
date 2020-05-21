@@ -6,7 +6,7 @@
 package session;
 
 import javax.ejb.Remote;
-
+import entity.EmployeeDTO;
 /**
  *
  * @author John
@@ -14,5 +14,13 @@ import javax.ejb.Remote;
 @Remote
 public interface EmployeeFacadeRemote
 {
+
+    boolean createEmployee(EmployeeDTO employee);
+
+    EmployeeDTO getEmployeeDetails(int id);
+
+    boolean updateEmployee(EmployeeDTO employee);
+
+    boolean deleteEmployee(int id);
     
 }

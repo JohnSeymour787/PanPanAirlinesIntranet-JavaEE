@@ -6,44 +6,40 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author John
  */
 @Entity
-@Table(name = "EMPLOYEEES")
+@Table(name = "EMPLOYEE")
 @XmlRootElement
 @NamedQueries(
 {
-    @NamedQuery(name = "Employeees.findAll", query = "SELECT e FROM Employeees e")
-    , @NamedQuery(name = "Employeees.findByEmployeeid", query = "SELECT e FROM Employeees e WHERE e.employeeid = :employeeid")
-    , @NamedQuery(name = "Employeees.findByFirstname", query = "SELECT e FROM Employeees e WHERE e.firstname = :firstname")
-    , @NamedQuery(name = "Employeees.findByLastname", query = "SELECT e FROM Employeees e WHERE e.lastname = :lastname")
-    , @NamedQuery(name = "Employeees.findByAddress", query = "SELECT e FROM Employeees e WHERE e.address = :address")
-    , @NamedQuery(name = "Employeees.findByPhone", query = "SELECT e FROM Employeees e WHERE e.phone = :phone")
-    , @NamedQuery(name = "Employeees.findByRolegroup", query = "SELECT e FROM Employeees e WHERE e.rolegroup = :rolegroup")
-    , @NamedQuery(name = "Employeees.findByEmail", query = "SELECT e FROM Employeees e WHERE e.email = :email")
-    , @NamedQuery(name = "Employeees.findByUsername", query = "SELECT e FROM Employeees e WHERE e.username = :username")
-    , @NamedQuery(name = "Employeees.findByPasswordplain", query = "SELECT e FROM Employeees e WHERE e.passwordplain = :passwordplain")
-    , @NamedQuery(name = "Employeees.findByPasswordencrypted", query = "SELECT e FROM Employeees e WHERE e.passwordencrypted = :passwordencrypted")
-    , @NamedQuery(name = "Employeees.findByActive", query = "SELECT e FROM Employeees e WHERE e.active = :active")
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
+    , @NamedQuery(name = "Employee.findByEmployeeid", query = "SELECT e FROM Employee e WHERE e.employeeid = :employeeid")
+    , @NamedQuery(name = "Employee.findByFirstname", query = "SELECT e FROM Employee e WHERE e.firstname = :firstname")
+    , @NamedQuery(name = "Employee.findByLastname", query = "SELECT e FROM Employee e WHERE e.lastname = :lastname")
+    , @NamedQuery(name = "Employee.findByAddress", query = "SELECT e FROM Employee e WHERE e.address = :address")
+    , @NamedQuery(name = "Employee.findByPhone", query = "SELECT e FROM Employee e WHERE e.phone = :phone")
+    , @NamedQuery(name = "Employee.findByRolegroup", query = "SELECT e FROM Employee e WHERE e.rolegroup = :rolegroup")
+    , @NamedQuery(name = "Employee.findByEmail", query = "SELECT e FROM Employee e WHERE e.email = :email")
+    , @NamedQuery(name = "Employee.findByUsername", query = "SELECT e FROM Employee e WHERE e.username = :username")
+    , @NamedQuery(name = "Employee.findByPasswordplain", query = "SELECT e FROM Employee e WHERE e.passwordplain = :passwordplain")
+    , @NamedQuery(name = "Employee.findByPasswordencrypted", query = "SELECT e FROM Employee e WHERE e.passwordencrypted = :passwordencrypted")
+    , @NamedQuery(name = "Employee.findByActive", query = "SELECT e FROM Employee e WHERE e.active = :active")
 })
-public class Employeees implements Serializable
+public class Employee implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
@@ -103,19 +99,17 @@ public class Employeees implements Serializable
     @NotNull
     @Column(name = "ACTIVE")
     private Boolean active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeid")
-    private Collection<Flightcrew> flightcrewCollection;
 
-    public Employeees()
+    public Employee()
     {
     }
 
-    public Employeees(Integer employeeid)
+    public Employee(Integer employeeid)
     {
         this.employeeid = employeeid;
     }
 
-    public Employeees(Integer employeeid, String firstname, String lastname, String address, String phone, String rolegroup, String email, String username, String passwordplain, String passwordencrypted, Boolean active)
+    public Employee(Integer employeeid, String firstname, String lastname, String address, String phone, String rolegroup, String email, String username, String passwordplain, String passwordencrypted, Boolean active)
     {
         this.employeeid = employeeid;
         this.firstname = firstname;
@@ -240,17 +234,6 @@ public class Employeees implements Serializable
         this.active = active;
     }
 
-    @XmlTransient
-    public Collection<Flightcrew> getFlightcrewCollection()
-    {
-        return flightcrewCollection;
-    }
-
-    public void setFlightcrewCollection(Collection<Flightcrew> flightcrewCollection)
-    {
-        this.flightcrewCollection = flightcrewCollection;
-    }
-
     @Override
     public int hashCode()
     {
@@ -263,11 +246,11 @@ public class Employeees implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employeees))
+        if (!(object instanceof Employee))
         {
             return false;
         }
-        Employeees other = (Employeees) object;
+        Employee other = (Employee) object;
         if ((this.employeeid == null && other.employeeid != null) || (this.employeeid != null && !this.employeeid.equals(other.employeeid)))
         {
             return false;
@@ -278,7 +261,7 @@ public class Employeees implements Serializable
     @Override
     public String toString()
     {
-        return "entity.Employeees[ employeeid=" + employeeid + " ]";
+        return "entity.Employee[ employeeid=" + employeeid + " ]";
     }
     
 }

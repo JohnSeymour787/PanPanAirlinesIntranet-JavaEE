@@ -6,7 +6,7 @@
 package session;
 
 import javax.ejb.Remote;
-
+import entity.ScheduledFlightDTO;
 /**
  *
  * @author John
@@ -14,5 +14,13 @@ import javax.ejb.Remote;
 @Remote
 public interface ScheduledFlightFacadeRemote
 {
+
+    boolean createScheduledFlight(ScheduledFlightDTO flight);
+
+    ScheduledFlightDTO findScheduledFlight(int id);
+
+    boolean updateScheduledFlight(ScheduledFlightDTO flight);
+
+    boolean deleteScheduledFlight(int id);
     
 }

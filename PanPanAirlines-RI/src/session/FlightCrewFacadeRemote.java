@@ -6,7 +6,7 @@
 package session;
 
 import javax.ejb.Remote;
-
+import entity.FlightCrewDTO;
 /**
  *
  * @author John
@@ -14,5 +14,13 @@ import javax.ejb.Remote;
 @Remote
 public interface FlightCrewFacadeRemote
 {
+
+    boolean createFlightCrew(FlightCrewDTO flightCrew);
+
+    FlightCrewDTO findFlightCrew(int id);
+
+    boolean updateFlightCrew(FlightCrewDTO flightCrew);
+
+    boolean deleteFlightCrew(int id);
     
 }
