@@ -8,7 +8,7 @@ package session;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import entity.Scheduledflight;
+import entity.ScheduledflightDeprecated;
 import entity.ScheduledFlightDTO;
 import javax.ejb.EJB;
 /**
@@ -26,17 +26,17 @@ public class ScheduledFlightFacade implements ScheduledFlightFacadeRemote
     @EJB
     private FlightCrewFacadeLocal flightCrewFacade;
     
-    private void createFlight(Scheduledflight flight) throws Exception
+    private void createFlight(ScheduledflightDeprecated flight) throws Exception
     {
         em.persist(flight);
     }
     
-    private Scheduledflight findFlight(int id)
+    private ScheduledflightDeprecated findFlight(int id)
     {
-        return em.find(Scheduledflight.class, id);
+        return em.find(ScheduledflightDeprecated.class, id);
     }
     
-    private void updateFlight(Scheduledflight flight) throws Exception
+    private void updateFlight(ScheduledflightDeprecated flight) throws Exception
     {
         if (em.merge(flight) == null)
             throw new Exception("Nothing updated.");
@@ -44,7 +44,7 @@ public class ScheduledFlightFacade implements ScheduledFlightFacadeRemote
     
     private void deleteFlight(int id) throws Exception
     {
-        Scheduledflight toRemove = findFlight(id);
+        ScheduledflightDeprecated toRemove = findFlight(id);
         if (toRemove == null)
             throw new Exception("Cannot find record to remove.");
         else
@@ -52,11 +52,11 @@ public class ScheduledFlightFacade implements ScheduledFlightFacadeRemote
     }
     
     //Converts the externally-available DTO to a DAO for use with the EntityManager
-    private Scheduledflight dtoToDAO(ScheduledFlightDTO flight)
+    private ScheduledflightDeprecated dtoToDAO(ScheduledFlightDTO flight)
     {
-        Scheduledflight result;
+        ScheduledflightDeprecated result;
         
-        result = new Scheduledflight
+        result = new ScheduledflightDeprecated
         (
                 flight.getFlightnumber(), 
                 flight.getOriginatingairport(), 
@@ -75,24 +75,83 @@ public class ScheduledFlightFacade implements ScheduledFlightFacadeRemote
     @Override
     public boolean createScheduledFlight(ScheduledFlightDTO flight)
     {
-        return false;
+        if (flight == null)
+            return false;
+        
+        //Record already exists
+        if (findFlight(flight.getFlightnumber()) != null)
+            return false;
+        
+        try
+        {
+            createFlight(dtoToDAO(flight));
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private ScheduledFlightDTO doaToDTO(ScheduledflightDeprecated flight)
+    {
+        if (flight == null)
+            return null;
+        
+        ScheduledFlightDTO result = new ScheduledFlightDTO
+        (
+            flight.getFlightnumber(), 
+            flight.getOriginatingairport(),
+            flight.getDestinationairport(), 
+            aircraftFacade.findDTO(flight.getAircraft().getAircraftid()), 
+            flightCrewFacade.findFlightCrew(flight.getCrew().getId())
+        );
+        
+        return result;
     }
 
     @Override
     public ScheduledFlightDTO findScheduledFlight(int id)
     {
-        return null;
+        ScheduledflightDeprecated flight = findFlight(id);
+        
+        return doaToDTO(flight);
     }
 
     @Override
     public boolean updateScheduledFlight(ScheduledFlightDTO flight)
     {
-        return false;
+        if (flight == null)
+            return false;
+        
+        if (findFlight(flight.getFlightnumber()) == null)
+            return false;
+        
+        try
+        {
+            updateFlight(dtoToDAO(flight));
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
     public boolean deleteScheduledFlight(int id)
     {
-        return false;
+        try
+        {
+            deleteFlight(id);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        
+        return true;
     }
 }

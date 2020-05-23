@@ -129,7 +129,7 @@ public class AircraftFacade implements AircraftFacadeLocal
     }
 
     //@Override
-    public AircraftDTO daoToDTO(Aircraft aircraft)
+    private AircraftDTO daoToDTO(Aircraft aircraft)
     {
         if (aircraft == null)
             return null;
@@ -144,7 +144,7 @@ public class AircraftFacade implements AircraftFacadeLocal
         
         return result;
     }
-    
+
     //Converts the externally-available DTO to a DAO for use with the EntityManager
     @Override
     public Aircraft dtoToDAO(AircraftDTO aircraft)

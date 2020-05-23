@@ -15,15 +15,15 @@ public class ScheduledFlightDTO
     private final String originatingairport;
     private final String destinationairport;
     private final AircraftDTO aircraft;
-    private final FlightCrewDTO crewid;
+    private final FlightCrewDTO crew;
 
-    public ScheduledFlightDTO(Integer flightnumber, String originatingairport, String destinationairport, AircraftDTO aircraft, FlightCrewDTO crewid)
+    public ScheduledFlightDTO(Integer flightnumber, String originatingairport, String destinationairport, AircraftDTO aircraft, FlightCrewDTO crew)
     {
         this.flightnumber = flightnumber;
         this.originatingairport = originatingairport;
         this.destinationairport = destinationairport;
         this.aircraft = aircraft;
-        this.crewid = crewid;
+        this.crew = crew;
     }
 
     public Integer getFlightnumber()
@@ -46,10 +46,8 @@ public class ScheduledFlightDTO
         return aircraft;
     }
 
-    public FlightCrewDTO getCrewid()
+    public FlightCrewDTO getCrew()
     {
-        return crewid;
+        return crew;
     }
-    
-    
 }

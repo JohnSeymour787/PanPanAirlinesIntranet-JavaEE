@@ -39,8 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Aircraft implements Serializable
 {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aircraftid")
-    private Collection<Scheduledflight> scheduledflightCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aircraft")
+    private Collection<ScheduledflightDeprecated> scheduledflightCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -151,12 +151,12 @@ public class Aircraft implements Serializable
     }
 
     @XmlTransient
-    public Collection<Scheduledflight> getScheduledflightCollection()
+    public Collection<ScheduledflightDeprecated> getScheduledflightCollection()
     {
         return scheduledflightCollection;
     }
 
-    public void setScheduledflightCollection(Collection<Scheduledflight> scheduledflightCollection)
+    public void setScheduledflightCollection(Collection<ScheduledflightDeprecated> scheduledflightCollection)
     {
         this.scheduledflightCollection = scheduledflightCollection;
     }

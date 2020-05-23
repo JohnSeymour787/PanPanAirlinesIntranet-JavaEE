@@ -51,8 +51,8 @@ public class Flightcrew implements Serializable
     @JoinColumn(name = "EMPLOYEEID", referencedColumnName = "EMPLOYEEID")
     @ManyToOne(optional = false)
     private Employee employeeid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "crewid")
-    private Collection<Scheduledflight> scheduledflightCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "crew")
+    private Collection<ScheduledflightDeprecated> scheduledflightCollection;
 
     public Flightcrew()
     {
@@ -100,12 +100,12 @@ public class Flightcrew implements Serializable
     }
 
     @XmlTransient
-    public Collection<Scheduledflight> getScheduledflightCollection()
+    public Collection<ScheduledflightDeprecated> getScheduledflightCollection()
     {
         return scheduledflightCollection;
     }
 
-    public void setScheduledflightCollection(Collection<Scheduledflight> scheduledflightCollection)
+    public void setScheduledflightCollection(Collection<ScheduledflightDeprecated> scheduledflightCollection)
     {
         this.scheduledflightCollection = scheduledflightCollection;
     }

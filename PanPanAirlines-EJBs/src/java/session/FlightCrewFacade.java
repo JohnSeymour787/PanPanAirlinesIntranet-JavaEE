@@ -99,8 +99,6 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
         if (crewDAO == null)
             return null;
         
-        //Needs to work with the employee facade to get the employee DTO
-        
         FlightCrewDTO result = new FlightCrewDTO
         (
             crewDAO.getCrewid(), 
@@ -109,9 +107,7 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
             employeeFacade.getEmployeeDetails(crewDAO.getEmployeeid().getEmployeeid())
         );
         
-        
-        //return result;
-        return null;
+        return result;
     }
 
     @Override
