@@ -14,7 +14,6 @@ import entity.AircraftDTO;
 @Remote
 public interface AircraftManagementRemote
 {
-
     boolean addAircraft(AircraftDTO aircraft);
 
     AircraftDTO getAircraft(int id);
@@ -22,5 +21,4 @@ public interface AircraftManagementRemote
     boolean updateAircraftDetails(AircraftDTO aircraft);
 
     boolean deleteAircraft(int id);
-    
 }

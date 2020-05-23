@@ -15,7 +15,7 @@ import entity.FlightCrewDTO;
  * @author John
  */
 @Stateful
-public class FlightCrewFacade implements FlightCrewFacadeRemote
+public class FlightCrewFacade implements FlightCrewFacadeLocal
 {
 
     @PersistenceContext(unitName = "PanPanAirlines-EJBsPU")
@@ -26,7 +26,8 @@ public class FlightCrewFacade implements FlightCrewFacadeRemote
         em.persist(flight);
     }
     
-    private Flightcrew findCrew(int id)
+    @Override
+    public Flightcrew findCrewDAO(int id)
     {
         return em.find(Flightcrew.class, id);
     }
@@ -39,7 +40,7 @@ public class FlightCrewFacade implements FlightCrewFacadeRemote
     
     private void deleteCrew(int id) throws Exception
     {
-        Flightcrew toRemove = findCrew(id);
+        Flightcrew toRemove = findCrewDAO(id);
         if (toRemove == null)
             throw new Exception("Cannot find record to remove.");
         else
@@ -73,7 +74,7 @@ public class FlightCrewFacade implements FlightCrewFacadeRemote
             return false;
         
         //Record already exists
-        if (findCrew(flightCrew.getId()) != null)
+        if (!crewExists(flightCrew.getCrewid()))
             return false;
         
         try
@@ -91,20 +92,21 @@ public class FlightCrewFacade implements FlightCrewFacadeRemote
     @Override
     public FlightCrewDTO findFlightCrew(int id)
     {
-        Flightcrew crewDAO = findCrew(id);
+        Flightcrew crewDAO = findCrewDAO(id);
         
         if (crewDAO == null)
             return null;
         
         //Needs to work with the employee facade to get the employee DTO
-        /*
+        
         FlightCrewDTO result = new FlightCrewDTO
         (
             crewDAO.getCrewid(), 
-            crewDAO.getId()
+            crewDAO.getId(),
             //crewDAO.getEmployeeid()
         );
-        */
+        
+        
         //return result;
         return null;
     }
@@ -116,7 +118,7 @@ public class FlightCrewFacade implements FlightCrewFacadeRemote
             return false;
         
         //Record must exist
-        if (findCrew(flightCrew.getId()) == null)
+        if (!crewExists(flightCrew.getCrewid()))
             return false;
         
         try
@@ -145,6 +147,10 @@ public class FlightCrewFacade implements FlightCrewFacadeRemote
         
         return true;
     }
-    
-    
+
+    @Override
+    public boolean crewExists(int id)
+    {
+        return findCrewDAO(id) != null;
+    }
 }

@@ -19,56 +19,25 @@ public class AircraftManagement implements AircraftManagementRemote
 {
     @EJB
     private AircraftFacadeLocal aircraftFacade;
-    //Converts the externally-available DTO to a DAO for use with the EntityManager
-    private Aircraft dtoToDAO(AircraftDTO aircraft)
-    {
-        if (aircraft == null)
-            return null;
-        
-        Aircraft result;
-        
-        result = new Aircraft
-        (
-            aircraft.getAircraftID(), 
-            aircraft.getAircraftType(), 
-            aircraft.getSeats(), 
-            aircraft.getManufacturer()
-        );
-        
-        return result;
-    }
+
     
     
     @Override
     public boolean addAircraft(AircraftDTO aircraft)
     {   
-        return aircraftFacade.addAircraft(dtoToDAO(aircraft));
+        return aircraftFacade.addAircraft(aircraft);
     }
 
     @Override
     public AircraftDTO getAircraft(int id)
     {
-        Aircraft tableRecord = aircraftFacade.find(id);
-        
-        if (tableRecord == null)
-            return null;
-        
-        //Convert to DTO before returning
-        AircraftDTO result = new AircraftDTO
-        (
-            tableRecord.getAircraftid(), 
-            tableRecord.getAircrafttype(), 
-            tableRecord.getSeats(), 
-            tableRecord.getManufacturer()
-        );
-        
-        return result;
+        return aircraftFacade.findDTO(id);
     }
 
     @Override
     public boolean updateAircraftDetails(AircraftDTO aircraft)
     {       
-        return aircraftFacade.updateAircraftDetails(dtoToDAO(aircraft));
+        return aircraftFacade.updateAircraftDetails(aircraft);
     }
 
     @Override

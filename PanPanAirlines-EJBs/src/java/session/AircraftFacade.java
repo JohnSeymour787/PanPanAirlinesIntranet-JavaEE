@@ -48,6 +48,12 @@ public class AircraftFacade implements AircraftFacadeLocal
         return em.find(Aircraft.class, id);
     }
     
+    @Override
+    public AircraftDTO findDTO(int id)
+    {
+        return daoToDTO(em.find(Aircraft.class, id));
+    }
+    
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -56,18 +62,18 @@ public class AircraftFacade implements AircraftFacadeLocal
     
     
     @Override
-    public boolean addAircraft(Aircraft aircraft)
+    public boolean addAircraft(AircraftDTO aircraft)
     {
         if (aircraft == null) 
             return false;
         
         //If aircraft already exists in the DB
-        if (!aircraftExists(aircraft.getAircraftid())) 
+        if (!aircraftExists(aircraft.getAircraftID())) 
             return false;
         
         try
         {
-            create(aircraft);
+            create(dtoToDAO(aircraft));
         }
         catch (Exception e)
         {
@@ -80,18 +86,18 @@ public class AircraftFacade implements AircraftFacadeLocal
 
 
     @Override
-    public boolean updateAircraftDetails(Aircraft aircraft)
+    public boolean updateAircraftDetails(AircraftDTO aircraft)
     {
         if (aircraft == null)
             return false;
         
         //Cannot edit record that doesn't exist
-        if (!aircraftExists(aircraft.getAircraftid()))
+        if (!aircraftExists(aircraft.getAircraftID()))
             return false;
         
         try
         {
-            edit(aircraft);
+            edit(dtoToDAO(aircraft));
         }
         catch (Exception e)
         {

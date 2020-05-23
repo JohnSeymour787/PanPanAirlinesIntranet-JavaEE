@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entity.Scheduledflight;
 import entity.ScheduledFlightDTO;
+import javax.ejb.EJB;
 /**
  *
  * @author John
@@ -20,8 +21,12 @@ public class ScheduledFlightFacade implements ScheduledFlightFacadeRemote
 
     @PersistenceContext(unitName = "PanPanAirlines-EJBsPU")
     private EntityManager em;
-   
-    private void createFlight(Scheduledflight flight)
+    @EJB
+    private AircraftFacadeLocal aircraftFacade;
+    @EJB
+    private FlightCrewFacadeLocal flightCrewFacade;
+    
+    private void createFlight(Scheduledflight flight) throws Exception
     {
         em.persist(flight);
     }
@@ -31,16 +36,38 @@ public class ScheduledFlightFacade implements ScheduledFlightFacadeRemote
         return em.find(Scheduledflight.class, id);
     }
     
-    private void updateFlight(Scheduledflight flight)
+    private void updateFlight(Scheduledflight flight) throws Exception
     {
-        em.merge(flight);
+        if (em.merge(flight) == null)
+            throw new Exception("Nothing updated.");
     }
     
-    private void deleteFlight(int id)
+    private void deleteFlight(int id) throws Exception
     {
-        em.remove(id);
+        Scheduledflight toRemove = findFlight(id);
+        if (toRemove == null)
+            throw new Exception("Cannot find record to remove.");
+        else
+            em.remove(toRemove);
     }
     
+    //Converts the externally-available DTO to a DAO for use with the EntityManager
+    private Scheduledflight dtoToDAO(ScheduledFlightDTO flight)
+    {
+        Scheduledflight result;
+        
+        result = new Scheduledflight
+        (
+                flight.getFlightnumber(), 
+                flight.getOriginatingairport(), 
+                flight.getDestinationairport(), 
+                //Get the aircraft and flight crew entity classes
+                aircraftFacade.find(flight.getAircraft().getAircraftID()),
+                flightCrewFacade.findCrewDAO(flight.getFlightnumber())
+        );
+        
+        return result;
+    }
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

@@ -5,22 +5,28 @@
  */
 package session;
 
-import javax.ejb.Remote;
+import entity.Flightcrew;
 import entity.FlightCrewDTO;
+import javax.ejb.Local;
+
 /**
  *
  * @author John
  */
-@Remote
-public interface FlightCrewFacadeRemote
+@Local
+public interface FlightCrewFacadeLocal
 {
-
-    boolean createFlightCrew(FlightCrewDTO flightCrew);
-
+    Flightcrew findCrewDAO(int id);
+    
     FlightCrewDTO findFlightCrew(int id);
-
+    
+    boolean createFlightCrew(FlightCrewDTO flightCrew);
+    
     boolean updateFlightCrew(FlightCrewDTO flightCrew);
-
+    
     boolean deleteFlightCrew(int id);
     
+    boolean crewExists(int id);
+    
+    //Flightcrew dtoToDAO(FlightCrewDTO flightCrew);
 }

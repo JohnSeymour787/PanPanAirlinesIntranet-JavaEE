@@ -18,11 +18,13 @@ public interface AircraftFacadeLocal
 {
     Aircraft find(int id);
     
-    boolean addAircraft(Aircraft aircraft);
+    AircraftDTO findDTO(int id);
+    
+    boolean addAircraft(AircraftDTO aircraft);
 
     boolean aircraftExists(int id);
     
-    boolean updateAircraftDetails(Aircraft aircraft);
+    boolean updateAircraftDetails(AircraftDTO aircraft);
     
     boolean deleteAircraft(int id);
 

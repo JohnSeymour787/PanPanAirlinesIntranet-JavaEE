@@ -13,14 +13,14 @@ public class FlightCrewDTO
 {
     private final int crewid;
     private final Integer id;
-    private final EmployeeDTO employeeid;
+    private final EmployeeDTO employees;
     //private Collection<Scheduledflight> scheduledflightCollection;
 
-    public FlightCrewDTO(int crewid, Integer id, EmployeeDTO employeeid)
+    public FlightCrewDTO(int crewid, Integer id, EmployeeDTO employees)
     {
         this.crewid = crewid;
         this.id = id;
-        this.employeeid = employeeid;
+        this.employees = employees;
     }
 
     public int getCrewid()
@@ -33,9 +33,9 @@ public class FlightCrewDTO
         return id;
     }
 
-    public EmployeeDTO getEmployeeid()
+    public EmployeeDTO getEmployees()
     {
-        return employeeid;
+        return employees;
     }
     
     

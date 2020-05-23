@@ -14,7 +14,6 @@ import entity.ScheduledFlightDTO;
 @Remote
 public interface ScheduledFlightFacadeRemote
 {
-
     boolean createScheduledFlight(ScheduledFlightDTO flight);
 
     ScheduledFlightDTO findScheduledFlight(int id);
@@ -22,5 +21,4 @@ public interface ScheduledFlightFacadeRemote
     boolean updateScheduledFlight(ScheduledFlightDTO flight);
 
     boolean deleteScheduledFlight(int id);
-    
 }
