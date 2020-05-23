@@ -6,9 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,11 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -51,8 +47,6 @@ public class Flightcrew implements Serializable
     @JoinColumn(name = "EMPLOYEEID", referencedColumnName = "EMPLOYEEID")
     @ManyToOne(optional = false)
     private Employee employeeid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "crew")
-    private Collection<ScheduledflightDeprecated> scheduledflightCollection;
 
     public Flightcrew()
     {
@@ -97,17 +91,6 @@ public class Flightcrew implements Serializable
     public void setEmployeeid(Employee employeeid)
     {
         this.employeeid = employeeid;
-    }
-
-    @XmlTransient
-    public Collection<ScheduledflightDeprecated> getScheduledflightCollection()
-    {
-        return scheduledflightCollection;
-    }
-
-    public void setScheduledflightCollection(Collection<ScheduledflightDeprecated> scheduledflightCollection)
-    {
-        this.scheduledflightCollection = scheduledflightCollection;
     }
 
     @Override
