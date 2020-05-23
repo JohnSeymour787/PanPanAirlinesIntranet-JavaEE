@@ -54,7 +54,7 @@ public class EmployeeFacade implements EmployeeFacadeRemote
     }
     
     //Assumes parameter is already checked and not null
-    private Employee dtoTODAO(EmployeeDTO employeeDTO)
+    private Employee dtoToDAO(EmployeeDTO employeeDTO)
     {
         Employee result;
         
@@ -90,7 +90,7 @@ public class EmployeeFacade implements EmployeeFacadeRemote
         
         try
         {
-            newEmployee(dtoTODAO(employee));
+            newEmployee(dtoToDAO(employee));
         }
         catch (Exception e)
         {
@@ -137,7 +137,7 @@ public class EmployeeFacade implements EmployeeFacadeRemote
         
         try
         {
-            editAll(dtoTODAO(employee));
+            editAll(dtoToDAO(employee));
         }
         catch (Exception e)
         {

@@ -63,17 +63,16 @@ public class Scheduledflight implements Serializable
     {
     }
 
-    public Scheduledflight(Integer flightnumber)
-    {
-        this.flightnumber = flightnumber;
-    }
-
-    public Scheduledflight(Integer flightnumber, String originatingairport, String destinationairport)
+    public Scheduledflight(Integer flightnumber, String originatingairport, String destinationairport, Aircraft aircraftid, Flightcrew crewid)
     {
         this.flightnumber = flightnumber;
         this.originatingairport = originatingairport;
         this.destinationairport = destinationairport;
+        this.aircraftid = aircraftid;
+        this.crewid = crewid;
     }
+
+ 
 
     public Integer getFlightnumber()
     {

@@ -15,18 +15,13 @@ import entity.AircraftDTO;
  * @author John
  */
 @Stateless
-public class AircraftFacade implements AircraftFacadeRemote
+public class AircraftFacade implements AircraftFacadeLocal
 {
 
     @PersistenceContext(unitName = "PanPanAirlines-EJBsPU")
     private EntityManager em;
 
-    /*
-    public void persist(Object object)
-    {
-        em.persist(object);
-    }
-*/
+    
     private void create(Aircraft aircraft) throws Exception
     {
         em.persist(aircraft);
@@ -47,7 +42,8 @@ public class AircraftFacade implements AircraftFacadeRemote
             em.remove(toRemove);
     }
     
-    private Aircraft find(int id)
+    @Override
+    public Aircraft find(int id)
     {
         return em.find(Aircraft.class, id);
     }
@@ -56,36 +52,22 @@ public class AircraftFacade implements AircraftFacadeRemote
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    //Converts the externally-available DTO to a DAO for use with the EntityManager
-    private Aircraft dtoToDAO(AircraftDTO aircraft)
-    {
-        Aircraft result;
-        
-        result = new Aircraft
-        (
-            aircraft.getAircraftID(), 
-            aircraft.getAircraftType(), 
-            aircraft.getSeats(), 
-            aircraft.getManufacturer()
-        );
-        
-        return result;
-    }
+
     
     
     @Override
-    public boolean addAircraft(AircraftDTO aircraft)
+    public boolean addAircraft(Aircraft aircraft)
     {
         if (aircraft == null) 
             return false;
         
         //If aircraft already exists in the DB
-        if (find(aircraft.getAircraftID()) != null) 
+        if (!aircraftExists(aircraft.getAircraftid())) 
             return false;
         
         try
         {
-            create(dtoToDAO(aircraft));
+            create(aircraft);
         }
         catch (Exception e)
         {
@@ -95,39 +77,21 @@ public class AircraftFacade implements AircraftFacadeRemote
         return true;
     }
 
-    @Override
-    public AircraftDTO getAircraft(int id)
-    {
-        Aircraft tableRecord = find(id);
-        
-        if (tableRecord == null)
-            return null;
-        
-        //Convert to DTO before returning
-        AircraftDTO result = new AircraftDTO
-        (
-            tableRecord.getAircraftid(), 
-            tableRecord.getAircrafttype(), 
-            tableRecord.getSeats(), 
-            tableRecord.getManufacturer()
-        );
-        
-        return result;
-    }
+
 
     @Override
-    public boolean updateAircraftDetails(AircraftDTO aircraft)
+    public boolean updateAircraftDetails(Aircraft aircraft)
     {
         if (aircraft == null)
             return false;
         
         //Cannot edit record that doesn't exist
-        if (find(aircraft.getAircraftID()) == null)
+        if (!aircraftExists(aircraft.getAircraftid()))
             return false;
         
         try
         {
-            edit(dtoToDAO(aircraft));
+            edit(aircraft);
         }
         catch (Exception e)
         {
@@ -150,5 +114,48 @@ public class AircraftFacade implements AircraftFacadeRemote
         }
         
         return true;
+    }
+
+    @Override
+    public boolean aircraftExists(int id)
+    {
+        return find(id) != null;
+    }
+
+    //@Override
+    public AircraftDTO daoToDTO(Aircraft aircraft)
+    {
+        if (aircraft == null)
+            return null;
+        
+        AircraftDTO result = new AircraftDTO
+        (
+            aircraft.getAircraftid(), 
+            aircraft.getAircrafttype(), 
+            aircraft.getSeats(), 
+            aircraft.getManufacturer()
+        );
+        
+        return result;
+    }
+    
+    //Converts the externally-available DTO to a DAO for use with the EntityManager
+    @Override
+    public Aircraft dtoToDAO(AircraftDTO aircraft)
+    {
+        if (aircraft == null)
+            return null;
+        
+        Aircraft result;
+        
+        result = new Aircraft
+        (
+            aircraft.getAircraftID(), 
+            aircraft.getAircraftType(), 
+            aircraft.getSeats(), 
+            aircraft.getManufacturer()
+        );
+        
+        return result;
     }
 }

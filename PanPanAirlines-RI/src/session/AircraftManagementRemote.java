@@ -12,7 +12,7 @@ import entity.AircraftDTO;
  * @author John
  */
 @Remote
-public interface AircraftFacadeRemote
+public interface AircraftManagementRemote
 {
 
     boolean addAircraft(AircraftDTO aircraft);
