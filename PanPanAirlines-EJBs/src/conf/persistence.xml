@@ -3,6 +3,9 @@
   <persistence-unit name="PanPanAirlines-EJBsPU" transaction-type="JTA">
     <jta-data-source>jdbc/__default</jta-data-source>
     <class>entity.Aircraft</class>
+    <class>entity.Employee</class>
+    <class>entity.Flightcrew</class>
+    <class>entity.ScheduledflightDeprecated</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

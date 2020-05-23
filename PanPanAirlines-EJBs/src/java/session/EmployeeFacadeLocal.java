@@ -5,20 +5,26 @@
  */
 package session;
 
-import javax.ejb.Remote;
+import entity.Employee;
 import entity.EmployeeDTO;
+import javax.ejb.Local;
+
 /**
  *
  * @author John
  */
-@Remote
-public interface EmployeeFacadeRemote
+@Local
+public interface EmployeeFacadeLocal
 {
-    boolean createEmployee(EmployeeDTO employee);
-
+    Employee find(int id);
+    
     EmployeeDTO getEmployeeDetails(int id);
+
+    boolean createEmployee(EmployeeDTO employee);
 
     boolean updateEmployee(EmployeeDTO employee);
 
     boolean deleteEmployee(int id);
+    
+    boolean employeeExists(int id);
 }

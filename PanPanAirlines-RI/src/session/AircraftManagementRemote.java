@@ -6,13 +6,19 @@
 package session;
 
 import javax.ejb.Remote;
-
+import entity.AircraftDTO;
 /**
  *
  * @author John
  */
 @Remote
-public interface FlightCrewFacadeRemote
+public interface AircraftManagementRemote
 {
-    
+    boolean addAircraft(AircraftDTO aircraft);
+
+    AircraftDTO getAircraft(int id);
+
+    boolean updateAircraftDetails(AircraftDTO aircraft);
+
+    boolean deleteAircraft(int id);
 }

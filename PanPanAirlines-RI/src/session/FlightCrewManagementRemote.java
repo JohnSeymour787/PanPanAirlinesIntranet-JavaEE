@@ -6,19 +6,19 @@
 package session;
 
 import javax.ejb.Remote;
-import entity.EmployeeDTO;
+import entity.FlightCrewDTO;
 /**
  *
  * @author John
  */
 @Remote
-public interface EmployeeFacadeRemote
+public interface FlightCrewManagementRemote
 {
-    boolean createEmployee(EmployeeDTO employee);
+    boolean createFlightCrew(FlightCrewDTO flightCrew);
 
-    EmployeeDTO getEmployeeDetails(int id);
+    FlightCrewDTO findFlightCrew(int id);
 
-    boolean updateEmployee(EmployeeDTO employee);
+    boolean updateFlightCrew(FlightCrewDTO flightCrew);
 
-    boolean deleteEmployee(int id);
+    boolean deleteFlightCrew(int id);   
 }
