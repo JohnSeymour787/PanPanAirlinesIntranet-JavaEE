@@ -27,19 +27,24 @@ public class AircraftFacade implements AircraftFacadeRemote
         em.persist(object);
     }
 */
-    private void create(Aircraft aircraft)
+    private void create(Aircraft aircraft) throws Exception
     {
         em.persist(aircraft);
     }
     
-    private void edit(Aircraft aircraft)
+    private void edit(Aircraft aircraft) throws Exception
     {
-        em.merge(aircraft);
+        if (em.merge(aircraft) == null)
+            throw new Exception("Nothing updated.");
     }
     
-    private void delete(Aircraft aircraft)
+    private void delete(int id) throws Exception
     {
-        em.remove(aircraft);
+        Aircraft toRemove = find(id);
+        if (toRemove == null)
+            throw new Exception("Cannot find record.");
+        else
+            em.remove(toRemove);
     }
     
     private Aircraft find(int id)
@@ -51,27 +56,99 @@ public class AircraftFacade implements AircraftFacadeRemote
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
+    //Converts the externally-available DTO to a DAO for use with the EntityManager
+    private Aircraft dtoToDAO(AircraftDTO aircraft)
+    {
+        Aircraft result;
+        
+        result = new Aircraft
+        (
+            aircraft.getAircraftID(), 
+            aircraft.getAircraftType(), 
+            aircraft.getSeats(), 
+            aircraft.getManufacturer()
+        );
+        
+        return result;
+    }
+    
+    
     @Override
     public boolean addAircraft(AircraftDTO aircraft)
     {
-        return false;
+        if (aircraft == null) 
+            return false;
+        
+        //If aircraft already exists in the DB
+        if (find(aircraft.getAircraftID()) != null) 
+            return false;
+        
+        try
+        {
+            create(dtoToDAO(aircraft));
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
     public AircraftDTO getAircraft(int id)
     {
-        return null;
+        Aircraft tableRecord = find(id);
+        
+        if (tableRecord == null)
+            return null;
+        
+        //Convert to DTO before returning
+        AircraftDTO result = new AircraftDTO
+        (
+            tableRecord.getAircraftid(), 
+            tableRecord.getAircrafttype(), 
+            tableRecord.getSeats(), 
+            tableRecord.getManufacturer()
+        );
+        
+        return result;
     }
 
     @Override
     public boolean updateAircraftDetails(AircraftDTO aircraft)
     {
-        return false;
+        if (aircraft == null)
+            return false;
+        
+        //Cannot edit record that doesn't exist
+        if (find(aircraft.getAircraftID()) == null)
+            return false;
+        
+        try
+        {
+            edit(dtoToDAO(aircraft));
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
     public boolean deleteAircraft(int id)
     {
-        return false;
+        try
+        {
+            delete(id);
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        
+        return true;
     }
 }
