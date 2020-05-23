@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entity.Flightcrew;
 import entity.FlightCrewDTO;
+import javax.ejb.EJB;
 /**
  *
  * @author John
@@ -17,10 +18,11 @@ import entity.FlightCrewDTO;
 @Stateful
 public class FlightCrewFacade implements FlightCrewFacadeLocal
 {
-
     @PersistenceContext(unitName = "PanPanAirlines-EJBsPU")
     private EntityManager em;
-
+    @EJB
+    private EmployeeFacadeLocal employeeFacade;
+    
     private void createCrew(Flightcrew flight) throws Exception
     {
         em.persist(flight);
@@ -103,7 +105,8 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
         (
             crewDAO.getCrewid(), 
             crewDAO.getId(),
-            //crewDAO.getEmployeeid()
+            //Getting the corresponding EmployeeDTO
+            employeeFacade.getEmployeeDetails(crewDAO.getEmployeeid().getEmployeeid())
         );
         
         

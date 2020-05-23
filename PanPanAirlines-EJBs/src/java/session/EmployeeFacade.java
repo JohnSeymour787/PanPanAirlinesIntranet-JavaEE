@@ -15,27 +15,14 @@ import entity.EmployeeDTO;
  * @author John
  */
 @Stateless
-public class EmployeeFacade implements EmployeeFacadeRemote
+public class EmployeeFacade implements EmployeeFacadeLocal
 {
-
     @PersistenceContext(unitName = "PanPanAirlines-EJBsPU")
     private EntityManager em;
-
-    /*
-    public void persist(Object object)
-    {
-        em.persist(object);
-    }
-    */
     
     private void newEmployee(Employee employee) throws Exception
     {
         em.persist(employee);
-    }
-    
-    private Employee find(int id)
-    {
-        return em.find(Employee.class, id);
     }
     
     private void editAll(Employee employee) throws Exception
@@ -74,6 +61,13 @@ public class EmployeeFacade implements EmployeeFacadeRemote
         );
     
         return result;
+    }
+    
+        
+    @Override
+    public Employee find(int id)
+    {
+        return em.find(Employee.class, id);
     }
     
     // Add business logic below. (Right-click in editor and choose
@@ -161,4 +155,10 @@ public class EmployeeFacade implements EmployeeFacadeRemote
         
         return true;
     }   
+
+    @Override
+    public boolean employeeExists(int id)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
