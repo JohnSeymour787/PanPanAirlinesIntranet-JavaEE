@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group name="PanPanAirlines">
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/EmployeeManagement.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/entity/Flightcrew.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/entity/Aircraft.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/conf/persistence.xml</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/EmployeeFacade.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/AircraftManagement.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/ScheduledFlightFacade.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/FlightCrewFacadeLocal.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/EmployeeFacadeLocal.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/FlightCrewFacade.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/entity/Employee.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/FlightCrewManagement.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/entity/ScheduledflightDeprecated.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/AircraftFacadeLocal.java</file>
+            <file>file:/C:/Users/John/Documents/NetBeansProjects/PanPanAirlines/PanPanAirlines-EJBs/src/java/session/AircraftFacade.java</file>
+        </group>
+    </open-files>
+</project-private>
