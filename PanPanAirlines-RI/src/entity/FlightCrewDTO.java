@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.util.List;
+
 /**
  *
  * @author John
@@ -13,10 +15,9 @@ public class FlightCrewDTO
 {
     private final int crewid;
     private final Integer id;
-    private final EmployeeDTO employees;
-    //private Collection<Scheduledflight> scheduledflightCollection;
+    private final List<EmployeeDTO> employees;
 
-    public FlightCrewDTO(int crewid, Integer id, EmployeeDTO employees)
+    public FlightCrewDTO(int crewid, Integer id, List<EmployeeDTO> employees)
     {
         this.crewid = crewid;
         this.id = id;
@@ -33,10 +34,8 @@ public class FlightCrewDTO
         return id;
     }
 
-    public EmployeeDTO getEmployees()
+    public List<EmployeeDTO> getEmployees()
     {
         return employees;
     }
-    
-    
 }

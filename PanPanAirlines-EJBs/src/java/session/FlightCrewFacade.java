@@ -5,12 +5,15 @@
  */
 package session;
 
+import entity.EmployeeDTO;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entity.Flightcrew;
 import entity.FlightCrewDTO;
+import java.util.ArrayList;
 import javax.ejb.EJB;
+import javax.persistence.Query;
 /**
  *
  * @author John
@@ -29,7 +32,7 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
     }
     
     @Override
-    public Flightcrew findCrewDAO(int id)
+    public Flightcrew findCrewDAO(Integer id)
     {
         return em.find(Flightcrew.class, id);
     }
@@ -53,15 +56,18 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
     //Converts the externally-available DTO to a DAO for use with the EntityManager
     private Flightcrew dtoToDAO(FlightCrewDTO flightCrew)
     {
+        /*
         Flightcrew result;
         
         result = new Flightcrew
         (
             flightCrew.getCrewid(), 
-            flightCrew.getId()
+            flightCrew.getId(),
+            flightCrew.getEmployees()
         );
-        
-        return result;
+        */
+        return null;
+        //return result;
     }
     
     // Add business logic below. (Right-click in editor and choose
@@ -98,16 +104,35 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
         
         if (crewDAO == null)
             return null;
-        
-        FlightCrewDTO result = new FlightCrewDTO
-        (
-            crewDAO.getCrewid(), 
-            crewDAO.getId(),
-            //Getting the corresponding EmployeeDTO
-            employeeFacade.getEmployeeDetails(crewDAO.getEmployeeid().getEmployeeid())
-        );
-        
-        return result;
+        try
+        {
+            //Finding all Flightcrew DAOs with the same, shared CrewID field
+            Query query = em.createNamedQuery("Flightcrew.findByCrewid").setParameter("crewid", crewDAO.getCrewid());
+            ArrayList<Flightcrew> daoArray = new ArrayList<>(query.getResultList());
+
+            //Extracting all employeeIDs from the Flightcrew DAOs.
+            int[] employeeIDs = new int[daoArray.size()];
+            for (int i = 0; i < employeeIDs.length; i++)
+                employeeIDs[i] = daoArray.get(i).getEmployeeid();
+
+            //EmployeeFacade will convert an array of empIDs to an ArrayList of DTOs.
+            ArrayList<EmployeeDTO> employeesDTOList = employeeFacade.employeeIDsToDTOs(employeeIDs);
+
+            //Can now create the FlightCrewDTO with the list of employeeDTOs
+            FlightCrewDTO result = new FlightCrewDTO
+            (
+                crewDAO.getCrewid(), 
+                crewDAO.getId(),
+                employeesDTOList
+            );
+
+            return result;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
     }
 
     @Override

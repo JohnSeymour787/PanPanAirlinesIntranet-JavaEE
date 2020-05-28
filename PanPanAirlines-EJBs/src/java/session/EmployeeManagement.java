@@ -8,14 +8,12 @@ package session;
 import entity.EmployeeDTO;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 
 /**
  *
  * @author John
  */
 @Stateless
-@LocalBean
 public class EmployeeManagement implements EmployeeFacadeRemote
 {
     @EJB
@@ -47,4 +45,10 @@ public class EmployeeManagement implements EmployeeFacadeRemote
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public boolean validatePassword(String passwordPlain, String passwordConfirm)
+    {
+        return false;
+    }
 }

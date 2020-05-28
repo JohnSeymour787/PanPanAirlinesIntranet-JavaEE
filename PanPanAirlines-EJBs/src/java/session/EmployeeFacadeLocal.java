@@ -7,6 +7,7 @@ package session;
 
 import entity.Employee;
 import entity.EmployeeDTO;
+import java.util.ArrayList;
 import javax.ejb.Local;
 
 /**
@@ -27,4 +28,6 @@ public interface EmployeeFacadeLocal
     boolean deleteEmployee(int id);
     
     boolean employeeExists(int id);
+
+    ArrayList<EmployeeDTO> employeeIDsToDTOs(int[] employeeIDs);
 }

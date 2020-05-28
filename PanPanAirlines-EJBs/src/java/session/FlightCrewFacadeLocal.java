@@ -16,7 +16,7 @@ import javax.ejb.Local;
 @Local
 public interface FlightCrewFacadeLocal
 {
-    Flightcrew findCrewDAO(int id);
+    Flightcrew findCrewDAO(Integer id);
     
     FlightCrewDTO findFlightCrew(int id);
     
