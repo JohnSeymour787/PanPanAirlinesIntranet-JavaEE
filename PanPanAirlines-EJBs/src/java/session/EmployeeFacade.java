@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entity.Employee;
 import entity.EmployeeDTO;
+import java.util.ArrayList;
+
 /**
  *
  * @author John
@@ -98,7 +100,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
     public EmployeeDTO getEmployeeDetails(int id)
     {
         Employee employeeDAO = find(id);
-        
+           
         if (employeeDAO == null)
             return null;
         
@@ -113,8 +115,30 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             employeeDAO.getEmail(), 
             employeeDAO.getUsername(),
             employeeDAO.getPasswordplain(),
-            employeeDAO.getPasswordencrypted(),
+            //employeeDAO.getPasswordencrypted(),
             employeeDAO.getActive()
+        );
+
+        return result;
+    }
+    
+    private EmployeeDTO daoToDto(Employee employee)
+    {
+        if (employee == null) return null;
+        
+        EmployeeDTO result = new EmployeeDTO
+        (
+            employee.getEmployeeid(), 
+            employee.getFirstname(), 
+            employee.getLastname(), 
+            employee.getAddress(), 
+            employee.getPhone(), 
+            employee.getRolegroup(), 
+            employee.getEmail(), 
+            employee.getUsername(),
+            employee.getPasswordplain(),
+            //employeeDAO.getPasswordencrypted(),
+            employee.getActive()
         );
         
         return result;
@@ -159,6 +183,29 @@ public class EmployeeFacade implements EmployeeFacadeLocal
     @Override
     public boolean employeeExists(int id)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return find(id) != null;
+    }
+
+    /*
+        Converts an array of ints to an ArrayList of EmployeeDTOs
+    */
+    @Override
+    public ArrayList<EmployeeDTO> employeeIDsToDTOs(int[] employeeIDs)
+    {
+        if (employeeIDs == null)
+            return null;
+        
+        ArrayList<EmployeeDTO> result = new ArrayList<>();
+        EmployeeDTO DTOElement = null;
+        
+        for (int employeeID : employeeIDs)
+        {
+            //Finding the EmployeeDTO from the DB for each empID
+            DTOElement = daoToDto(find(employeeID));
+            if (DTOElement != null)
+                result.add(DTOElement);
+        }
+        
+        return result;
     }
 }

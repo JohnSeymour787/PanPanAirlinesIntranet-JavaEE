@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+    ToDo:
+    -Delete password encrypted code
+    -
+*/
 package entity;
 
 /**
@@ -20,13 +20,10 @@ public class EmployeeDTO
     private final String email;
     private final String username;
     private final String passwordplain;
-    private final String passwordencrypted;
+    //private final String passwordencrypted;
     private final Boolean active;
-    
-   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeid")
-    //private Collection<Flightcrew> flightcrewCollection;
 
-    public EmployeeDTO(Integer employeeid, String firstname, String lastname, String address, String phone, String rolegroup, String email, String username, String passwordplain, String passwordencrypted, Boolean active)
+    public EmployeeDTO(Integer employeeid, String firstname, String lastname, String address, String phone, String rolegroup, String email, String username, String passwordplain, Boolean active)
     {
         this.employeeid = employeeid;
         this.firstname = firstname;
@@ -37,7 +34,7 @@ public class EmployeeDTO
         this.email = email;
         this.username = username;
         this.passwordplain = passwordplain;
-        this.passwordencrypted = passwordencrypted;
+        //this.passwordencrypted = passwordencrypted;
         this.active = active;
     }
 
@@ -86,13 +83,19 @@ public class EmployeeDTO
         return passwordplain;
     }
 
-    public String getPasswordencrypted()
-    {
-        return passwordencrypted;
-    }
+
 
     public Boolean getActive()
     {
         return active;
+    }
+    
+    
+    //****************************************************************** TO REMOVE****************************//
+    //****************************************************************** TO REMOVE****************************//
+    //****************************************************************** TO REMOVE****************************//
+    public String getPasswordencrypted()
+    {
+        return "";
     }
 }

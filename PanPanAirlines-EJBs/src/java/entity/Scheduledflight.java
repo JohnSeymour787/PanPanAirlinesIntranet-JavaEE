@@ -10,8 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,10 +28,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 {
     @NamedQuery(name = "Scheduledflight.findAll", query = "SELECT s FROM Scheduledflight s")
     , @NamedQuery(name = "Scheduledflight.findByFlightnumber", query = "SELECT s FROM Scheduledflight s WHERE s.flightnumber = :flightnumber")
+    , @NamedQuery(name = "Scheduledflight.findByCrewid", query = "SELECT s FROM Scheduledflight s WHERE s.crewid = :crewid")
+    , @NamedQuery(name = "Scheduledflight.findByAircraftid", query = "SELECT s FROM Scheduledflight s WHERE s.aircraftid = :aircraftid")
     , @NamedQuery(name = "Scheduledflight.findByOriginatingairport", query = "SELECT s FROM Scheduledflight s WHERE s.originatingairport = :originatingairport")
     , @NamedQuery(name = "Scheduledflight.findByDestinationairport", query = "SELECT s FROM Scheduledflight s WHERE s.destinationairport = :destinationairport")
 })
-public class ScheduledflightDeprecated implements Serializable
+public class Scheduledflight implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
@@ -44,6 +44,14 @@ public class ScheduledflightDeprecated implements Serializable
     private Integer flightnumber;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "CREWID")
+    private int crewid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "AIRCRAFTID")
+    private int aircraftid;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "ORIGINATINGAIRPORT")
     private String originatingairport;
@@ -52,27 +60,24 @@ public class ScheduledflightDeprecated implements Serializable
     @Size(min = 1, max = 50)
     @Column(name = "DESTINATIONAIRPORT")
     private String destinationairport;
-    @JoinColumn(name = "AIRCRAFTID", referencedColumnName = "AIRCRAFTID")
-    @ManyToOne(optional = false)
-    private Aircraft aircraft;
-    @JoinColumn(name = "CREWID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Flightcrew crew;
 
-    public ScheduledflightDeprecated()
+    public Scheduledflight()
     {
     }
 
-    public ScheduledflightDeprecated(Integer flightnumber, String originatingairport, String destinationairport, Aircraft aircraft, Flightcrew crew)
+    public Scheduledflight(Integer flightnumber)
     {
         this.flightnumber = flightnumber;
-        this.originatingairport = originatingairport;
-        this.destinationairport = destinationairport;
-        this.aircraft = aircraft;
-        this.crew = crew;
     }
 
- 
+    public Scheduledflight(Integer flightnumber, int crewid, int aircraftid, String originatingairport, String destinationairport)
+    {
+        this.flightnumber = flightnumber;
+        this.crewid = crewid;
+        this.aircraftid = aircraftid;
+        this.originatingairport = originatingairport;
+        this.destinationairport = destinationairport;
+    }
 
     public Integer getFlightnumber()
     {
@@ -82,6 +87,26 @@ public class ScheduledflightDeprecated implements Serializable
     public void setFlightnumber(Integer flightnumber)
     {
         this.flightnumber = flightnumber;
+    }
+
+    public int getCrewid()
+    {
+        return crewid;
+    }
+
+    public void setCrewid(int crewid)
+    {
+        this.crewid = crewid;
+    }
+
+    public int getAircraftid()
+    {
+        return aircraftid;
+    }
+
+    public void setAircraftid(int aircraftid)
+    {
+        this.aircraftid = aircraftid;
     }
 
     public String getOriginatingairport()
@@ -104,26 +129,6 @@ public class ScheduledflightDeprecated implements Serializable
         this.destinationairport = destinationairport;
     }
 
-    public Aircraft getAircraft()
-    {
-        return aircraft;
-    }
-
-    public void setAircraft(Aircraft aircraft)
-    {
-        this.aircraft = aircraft;
-    }
-
-    public Flightcrew getCrew()
-    {
-        return crew;
-    }
-
-    public void setCrew(Flightcrew crew)
-    {
-        this.crew = crew;
-    }
-
     @Override
     public int hashCode()
     {
@@ -136,11 +141,11 @@ public class ScheduledflightDeprecated implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ScheduledflightDeprecated))
+        if (!(object instanceof Scheduledflight))
         {
             return false;
         }
-        ScheduledflightDeprecated other = (ScheduledflightDeprecated) object;
+        Scheduledflight other = (Scheduledflight) object;
         if ((this.flightnumber == null && other.flightnumber != null) || (this.flightnumber != null && !this.flightnumber.equals(other.flightnumber)))
         {
             return false;

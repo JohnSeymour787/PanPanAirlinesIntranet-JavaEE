@@ -21,4 +21,6 @@ public interface EmployeeFacadeRemote
     boolean updateEmployee(EmployeeDTO employee);
 
     boolean deleteEmployee(int id);
+
+    boolean validatePassword(String passwordPlain, String passwordConfirm);
 }

@@ -10,8 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 {
     @NamedQuery(name = "Flightcrew.findAll", query = "SELECT f FROM Flightcrew f")
     , @NamedQuery(name = "Flightcrew.findByCrewid", query = "SELECT f FROM Flightcrew f WHERE f.crewid = :crewid")
+    , @NamedQuery(name = "Flightcrew.findByEmployeeid", query = "SELECT f FROM Flightcrew f WHERE f.employeeid = :employeeid")
     , @NamedQuery(name = "Flightcrew.findById", query = "SELECT f FROM Flightcrew f WHERE f.id = :id")
 })
 public class Flightcrew implements Serializable
@@ -39,14 +38,15 @@ public class Flightcrew implements Serializable
     @NotNull
     @Column(name = "CREWID")
     private int crewid;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "EMPLOYEEID")
+    private int employeeid;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
     private Integer id;
-    @JoinColumn(name = "EMPLOYEEID", referencedColumnName = "EMPLOYEEID")
-    @ManyToOne(optional = false)
-    private Employee employeeid;
 
     public Flightcrew()
     {
@@ -57,10 +57,11 @@ public class Flightcrew implements Serializable
         this.id = id;
     }
 
-    public Flightcrew(Integer id, int crewid)
+    public Flightcrew(Integer id, int crewid, int employeeid)
     {
         this.id = id;
         this.crewid = crewid;
+        this.employeeid = employeeid;
     }
 
     public int getCrewid()
@@ -73,6 +74,16 @@ public class Flightcrew implements Serializable
         this.crewid = crewid;
     }
 
+    public int getEmployeeid()
+    {
+        return employeeid;
+    }
+
+    public void setEmployeeid(int employeeid)
+    {
+        this.employeeid = employeeid;
+    }
+
     public Integer getId()
     {
         return id;
@@ -81,16 +92,6 @@ public class Flightcrew implements Serializable
     public void setId(Integer id)
     {
         this.id = id;
-    }
-
-    public Employee getEmployeeid()
-    {
-        return employeeid;
-    }
-
-    public void setEmployeeid(Employee employeeid)
-    {
-        this.employeeid = employeeid;
     }
 
     @Override

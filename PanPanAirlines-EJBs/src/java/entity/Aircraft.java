@@ -6,20 +6,16 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,9 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Aircraft implements Serializable
 {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aircraft")
-    private Collection<ScheduledflightDeprecated> scheduledflightCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -148,17 +141,6 @@ public class Aircraft implements Serializable
     public String toString()
     {
         return "entity.Aircraft[ aircraftid=" + aircraftid + " ]";
-    }
-
-    @XmlTransient
-    public Collection<ScheduledflightDeprecated> getScheduledflightCollection()
-    {
-        return scheduledflightCollection;
-    }
-
-    public void setScheduledflightCollection(Collection<ScheduledflightDeprecated> scheduledflightCollection)
-    {
-        this.scheduledflightCollection = scheduledflightCollection;
     }
     
 }
