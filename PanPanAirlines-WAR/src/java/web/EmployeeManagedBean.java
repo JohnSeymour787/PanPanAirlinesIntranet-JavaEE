@@ -9,6 +9,11 @@ import entity.EmployeeDTO;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import session.EmployeeFacadeRemote;
 
 /**
@@ -31,56 +36,26 @@ public class EmployeeManagedBean
     private String rolegroup = null;
     private String email = null;
     private String username = null;
-    private String passwordplain = null;
-    //private String passwordencrypted;
+    private String newPassword = null;
+    //private String confirmedPassword = null;
     private Boolean active = null;
     
-    /**
-     * Creates a new instance of Employee
-     */
+ 
     public EmployeeManagedBean()
     {
     }
+    
 
-    public boolean createEmployee()
+    public EmployeeFacadeRemote getEmployeeManagement()
     {
-        EmployeeDTO toAdd = new EmployeeDTO(employeeid, firstname, lastname, address, phone, rolegroup, email, username, passwordplain, active);
-        
-        return employeeManagement.createEmployee(toAdd);
+        return employeeManagement;
     }
-    
-    public boolean findEmployee()
+
+    public void setEmployeeManagement(EmployeeFacadeRemote employeeManagement)
     {
-        if (employeeid == null)
-            return false;
-        
-        EmployeeDTO employee = employeeManagement.getEmployeeDetails(employeeid);
-        
-        if (employee == null)
-            return false;
-        
-        displayDetails(employee);
-        
-        return true;
+        this.employeeManagement = employeeManagement;
     }
-    
-    private void displayDetails(EmployeeDTO details)
-    {
-        employeeid = details.getEmployeeid();
-        firstname = details.getFirstname();
-        lastname = details.getLastname();
-        address = details.getAddress();
-        phone = details.getPhone();
-        rolegroup = details.getRolegroup();
-        email = details.getEmail();
-        username = details.getUsername();
-        passwordplain = details.getPasswordplain();
-        active = details.getActive();
-    }
-    
-    
-    
-    
+
     public Integer getEmployeeid()
     {
         return employeeid;
@@ -161,26 +136,26 @@ public class EmployeeManagedBean
         this.username = username;
     }
 
-    public String getPasswordplain()
+    public String getNewPassword()
     {
-        return passwordplain;
+        return newPassword;
     }
 
-    public void setPasswordplain(String passwordplain)
+    public void setNewPassword(String newPassword)
     {
-        this.passwordplain = passwordplain;
+        this.newPassword = newPassword;
+    }
+/*
+    public String getConfirmedPassword()
+    {
+        return confirmedPassword;
     }
 
-    public String getPasswordencrypted()
+    public void setConfirmedPassword(String confirmedPassword)
     {
-        return "";
+        this.confirmedPassword = confirmedPassword;
     }
-
-    public void setPasswordencrypted(String passwordencrypted)
-    {
-        //this.passwordencrypted = passwordencrypted;
-    }
-
+*/
     public Boolean getActive()
     {
         return active;
@@ -191,5 +166,97 @@ public class EmployeeManagedBean
         this.active = active;
     }
     
+    public boolean addEmployee()
+    {
+        if (employeeid == null)
+            return false;
+        
+        EmployeeDTO dtoToAdd = new EmployeeDTO
+        (
+            employeeid, 
+            firstname, 
+            lastname, 
+            address, 
+            phone, 
+            rolegroup, 
+            email, 
+            username, 
+            newPassword, 
+            active
+        );
+        
+        return employeeManagement.createEmployee(dtoToAdd);
+    }
     
+    
+    public boolean findEmployee()
+    {
+        if (employeeid == null)
+            return false;
+        
+        EmployeeDTO employee = employeeManagement.getEmployeeDetails(employeeid);
+        
+        if (employee == null)
+            return false;
+        
+        displayDetails(employee);
+        
+        return true;
+    }
+    
+    private void displayDetails(EmployeeDTO details)
+    {
+        employeeid = details.getEmployeeid();
+        firstname = details.getFirstname();
+        lastname = details.getLastname();
+        address = details.getAddress();
+        phone = details.getPhone();
+        rolegroup = details.getRolegroup();
+        email = details.getEmail();
+        username = details.getUsername();
+        active = details.getActive();
+    }
+    
+    public boolean updateEmployeeDetails()
+    {
+        if (employeeid == null)
+            return false;
+        
+        EmployeeDTO dtoToUpdate = new EmployeeDTO(employeeid, firstname, lastname, address, phone, rolegroup, email, username, newPassword, active);
+        
+        return employeeManagement.updateEmployee(dtoToUpdate);
+    }
+    
+    public void validateMatchingPasswords(FacesContext context, UIComponent component, Object value)
+    {
+        String confirmedPassword = (String)value;
+        
+        String passwordField = (String)((UIInput)component.findComponent("password")).getLocalValue();
+        
+        if (!confirmedPassword.equals(passwordField))
+        {
+            ((UIInput)component).setValid(false);
+            FacesMessage message = new FacesMessage("Passwords do not match!");
+            context.addMessage(component.getClientId(context), message);
+        }
+    }
+    
+    //Update employee password
+    
+    
+    public boolean removeEmployee()
+    {
+        if (employeeid == null)
+            return false;
+        
+        return employeeManagement.deleteEmployee(employeeid);
+    }
+    
+    private void setLoggedInID()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
+
+        employeeid = Integer.parseInt(request.getUserPrincipal().getName());
+    }
 }
