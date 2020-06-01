@@ -46,7 +46,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
     private Employee dtoToDAO(EmployeeDTO employeeDTO)
     {
         Employee result;
-        
+
         result = new Employee
         (
             employeeDTO.getEmployeeid(), 
@@ -57,11 +57,11 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             employeeDTO.getRolegroup(), 
             employeeDTO.getEmail(), 
             employeeDTO.getUsername(), 
-            employeeDTO.getPasswordplain(), 
-            employeeDTO.getPasswordencrypted(), 
+            employeeDTO.getPasswordplain(),
+            "Encrypted password", 
             employeeDTO.getActive()
         );
-    
+
         return result;
     }
     
@@ -81,6 +81,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
         if (employee == null)
             return false;
         
+        //Check that employee does not already exist with this ID
         if (find(employee.getEmployeeid()) != null)
             return false;
         
@@ -125,7 +126,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
     private EmployeeDTO daoToDto(Employee employee)
     {
         if (employee == null) return null;
-        
+
         EmployeeDTO result = new EmployeeDTO
         (
             employee.getEmployeeid(), 
@@ -140,7 +141,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             //employeeDAO.getPasswordencrypted(),
             employee.getActive()
         );
-        
+
         return result;
     }
 

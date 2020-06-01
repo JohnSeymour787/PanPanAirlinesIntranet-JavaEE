@@ -189,6 +189,11 @@ public class EmployeeManagedBean
         if (employeeid == null)
             return false;
         
+        //Assuming new employee to be added is immediately active
+        active = true;
+        
+        System.out.println("1");
+        
         EmployeeDTO dtoToAdd = new EmployeeDTO
         (
             employeeid, 
