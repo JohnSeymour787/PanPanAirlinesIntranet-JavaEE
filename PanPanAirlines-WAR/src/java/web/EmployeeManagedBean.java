@@ -174,7 +174,6 @@ public class EmployeeManagedBean
     public String prepareForEmployeeView()
     {        
         boolean admin = isAdmin().equals("Admin");
-        employeeid = 1;
         
         //Only admins will be able to view all employees, so only now update the list with values
         if (admin)
@@ -189,6 +188,16 @@ public class EmployeeManagedBean
     }
     public String prepareForEmployeeUpdate()
     {
+        boolean admin = isAdmin().equals("Admin");
+        
+        if (!admin)
+            //Sets the client fields of this bean for standard users
+            if (!getLimitedEmployeeDetails())
+            {
+                //If failed due to unknown reason
+                return "Error";
+            }
+        
         return isAdmin();
     } 
     public String prepareForEmployeeDelete()
@@ -335,7 +344,9 @@ public class EmployeeManagedBean
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
 
-        return true ? "Admin" : "NoAdmin";
+        employeeid = 1;
+        
+        return false ? "Admin" : "NoAdmin";
         //employeeid = Integer.parseInt(request.getUserPrincipal().getName());
         
         //return employeeManagement.isAdmin(employeeid);

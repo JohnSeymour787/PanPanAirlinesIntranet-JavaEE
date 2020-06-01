@@ -151,9 +151,13 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             dao.setAddress(employee.getAddress());
             dao.setPhone(employee.getPhone());
             dao.setEmail(employee.getEmail());
-            dao.setRolegroup(employee.getRolegroup());
             dao.setUsername(employee.getUsername());
-            dao.setActive(employee.getActive());
+            
+            //If a non-admin is updating their details, these values in the DTO will be null and should not be updated
+            if (employee.getRolegroup() != null)
+                dao.setRolegroup(employee.getRolegroup());
+            if (employee.getActive() != null)
+                dao.setActive(employee.getActive());
             
             //Only if the client sends a valid password here update the old one
             if (employee.getPasswordplain() != null)

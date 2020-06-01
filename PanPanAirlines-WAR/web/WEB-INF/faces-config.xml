@@ -42,6 +42,11 @@
             <to-view-id>/Employee/updateMyDetails.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeUpdate()}</from-action>
+            <from-outcome>Error</from-outcome>
+            <to-view-id>/criticalError.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-action>#{employeeManagedBean.prepareForEmployeeDelete()}</from-action>
             <from-outcome>Admin</from-outcome>
             <to-view-id>/Employee/deleteEmployee.xhtml</to-view-id>
@@ -99,7 +104,20 @@
             <from-outcome>true</from-outcome>
             <to-view-id>/operationSuccess.xhtml</to-view-id>
         </navigation-case>
-                <navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.updateEmployeeDetails()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/Employee/updateMyDetails.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.updateEmployeeDetails()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/operationSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-action>#{employeeManagedBean.updateEmployeeDetails()}</from-action>
             <from-outcome>false</from-outcome>
             <to-view-id>/operationFailed.xhtml</to-view-id>
