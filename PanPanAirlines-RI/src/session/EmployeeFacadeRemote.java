@@ -23,4 +23,6 @@ public interface EmployeeFacadeRemote
     boolean deleteEmployee(int id);
 
     boolean validatePassword(String passwordPlain, String passwordConfirm);
+
+    boolean isAdmin(Integer employeeID);
 }

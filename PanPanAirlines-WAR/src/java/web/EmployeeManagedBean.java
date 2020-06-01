@@ -20,7 +20,7 @@ import session.EmployeeFacadeRemote;
  *
  * @author John
  */
-@Named(value = "employee")
+@Named(value = "employeeManagedBean")
 @RequestScoped
 public class EmployeeManagedBean
 {
@@ -44,7 +44,6 @@ public class EmployeeManagedBean
     public EmployeeManagedBean()
     {
     }
-    
 
     public EmployeeFacadeRemote getEmployeeManagement()
     {
@@ -156,6 +155,11 @@ public class EmployeeManagedBean
         this.confirmedPassword = confirmedPassword;
     }
 */
+    public Boolean prepareForEmployeeAdd()
+    {
+        return true;
+    }
+    
     public Boolean getActive()
     {
         return active;
@@ -258,5 +262,15 @@ public class EmployeeManagedBean
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
 
         employeeid = Integer.parseInt(request.getUserPrincipal().getName());
+    }
+    
+    public boolean isAdmin()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
+
+        employeeid = Integer.parseInt(request.getUserPrincipal().getName());
+        
+        return employeeManagement.isAdmin(employeeid);
     }
 }
