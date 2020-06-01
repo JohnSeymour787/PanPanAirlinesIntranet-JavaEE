@@ -11,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import entity.Employee;
 import entity.EmployeeDTO;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -137,8 +139,6 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             employee.getRolegroup(), 
             employee.getEmail(), 
             employee.getUsername(),
-            employee.getPasswordplain(),
-            //employeeDAO.getPasswordencrypted(),
             employee.getActive()
         );
 
@@ -206,6 +206,21 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             if (DTOElement != null)
                 result.add(DTOElement);
         }
+        
+        return result;
+    }
+
+    @Override
+    public List<EmployeeDTO> getAllEmployees()
+    {
+        //Finding all employee DAOs in the DB
+        Query query = em.createNamedQuery("Employee.findAll");
+        List<Employee> daoArray = new ArrayList<>(query.getResultList());
+        
+        List<EmployeeDTO> result = new ArrayList<>();
+        
+        for (Employee employee : daoArray)
+            result.add(daoToDto(employee));
         
         return result;
     }

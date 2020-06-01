@@ -6,6 +6,7 @@
 package session;
 
 import entity.EmployeeDTO;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -61,5 +62,11 @@ public class EmployeeManagement implements EmployeeFacadeRemote
             return false;
         else
             return temp.getRolegroup().equals("Admin");
+    }
+
+    @Override
+    public List<EmployeeDTO> getAllEmployees()
+    {
+        return employeeFacade.getAllEmployees();
     }
 }

@@ -20,7 +20,6 @@ public class EmployeeDTO
     private final String email;
     private final String username;
     private final String passwordplain;
-    //private final String passwordencrypted;
     private final Boolean active;
 
     public EmployeeDTO(Integer employeeid, String firstname, String lastname, String address, String phone, String rolegroup, String email, String username, String passwordplain, Boolean active)
@@ -36,6 +35,21 @@ public class EmployeeDTO
         this.passwordplain = passwordplain;
         //this.passwordencrypted = passwordencrypted;
         this.active = active;
+    }
+
+    //Constructor without setting password field
+    public EmployeeDTO(Integer employeeid, String firstname, String lastname, String address, String phone, String rolegroup, String email, String username, Boolean active)
+    {
+        this.employeeid = employeeid;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+        this.phone = phone;
+        this.rolegroup = rolegroup;
+        this.email = email;
+        this.username = username;
+        this.active = active;
+        this.passwordplain = null;
     }
 
     public Integer getEmployeeid()

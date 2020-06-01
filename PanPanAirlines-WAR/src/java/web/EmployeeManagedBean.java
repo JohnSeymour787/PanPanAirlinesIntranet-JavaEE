@@ -6,6 +6,7 @@
 package web;
 
 import entity.EmployeeDTO;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -39,10 +40,20 @@ public class EmployeeManagedBean
     private String newPassword = null;
     //private String confirmedPassword = null;
     private Boolean active = null;
-    
+    private List<EmployeeDTO> employees = null;
  
     public EmployeeManagedBean()
     {
+    }
+
+    public List<EmployeeDTO> getEmployees()
+    {
+        return employees;
+    }
+
+    public void setEmployees(List<EmployeeDTO> employees)
+    {
+        this.employees = employees;
     }
 
     public EmployeeFacadeRemote getEmployeeManagement()
@@ -162,7 +173,13 @@ public class EmployeeManagedBean
         return isAdmin();
     }
     public String prepareForEmployeeView()
-    {
+    {        
+        boolean admin = isAdmin().equals("Admin");
+        
+        //Only admins will be able to view all employees, so only now update the list with values
+        if (admin)
+            employees = employeeManagement.getAllEmployees();
+        
         return isAdmin();
     }
     public String prepareForEmployeeUpdate()
@@ -191,8 +208,6 @@ public class EmployeeManagedBean
         
         //Assuming new employee to be added is immediately active
         active = true;
-        
-        System.out.println("1");
         
         EmployeeDTO dtoToAdd = new EmployeeDTO
         (
