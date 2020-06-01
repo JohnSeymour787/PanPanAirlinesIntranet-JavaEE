@@ -3,12 +3,48 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
     <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
+        <from-view-id>/Employee/mainmenu.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{flightCrewManagedBean.findCrewDetails()}</from-action>
-            <from-outcome>true</from-outcome>
+            <from-action>#{employeeManagedBean.prepareForEmployeeAdd()}</from-action>
+            <from-outcome>Admin</from-outcome>
             <to-view-id>/Employee/add.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeAdd()}</from-action>
+            <from-outcome>NoAdmin</from-outcome>
+            <to-view-id>/accessDenied.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeView()}</from-action>
+            <from-outcome>Admin</from-outcome>
+            <to-view-id>/Employee/displayAnyDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeView()}</from-action>
+            <from-outcome>NoAdmin</from-outcome>
+            <to-view-id>/Employee/displayMyDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeUpdate()}</from-action>
+            <from-outcome>Admin</from-outcome>
+            <to-view-id>/Employee/updateAnyDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeUpdate()}</from-action>
+            <from-outcome>NoAdmin</from-outcome>
+            <to-view-id>/Employee/updateMyDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeDelete()}</from-action>
+            <from-outcome>Admin</from-outcome>
+            <to-view-id>/Employee/deleteEmployee.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeDelete()}</from-action>
+            <from-outcome>NoAdmin</from-outcome>
+            <to-view-id>/accessDenied.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

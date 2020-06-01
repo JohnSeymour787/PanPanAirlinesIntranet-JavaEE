@@ -7,12 +7,28 @@
     </h:head>
     <h:body>
         <h1><h:outputText>Main Menu</h:outputText></h1>
-        
-        <h:form>
-            Click <h:commandButton value="Find user" action="#{flightCrewManagedBean.findCrewDetails()}"/>           
-        </h:form>
-       
-        
+        <ul>
+            <li>
+                <h:outputLink value = "faces/Employee/mainmenu.xhtml" >
+                    Employee Management
+                </h:outputLink>
+            </li>
+            <li>
+                <h:outputLink value = "faces/Employee/mainmenu.xhtml" >
+                    Scheduled Flights
+                </h:outputLink>
+            </li>
+            <li>
+                <h:outputLink value = "faces/Employee/mainmenu.xhtml" >
+                    Crew Management
+                </h:outputLink>
+            </li>
+            <li>
+                <h:outputLink value = "faces/Employee/mainmenu.xhtml" >
+                    Aircraft
+                </h:outputLink>
+            </li>
+        </ul>
     </h:body>
 </html>
 
