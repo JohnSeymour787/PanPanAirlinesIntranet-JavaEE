@@ -231,6 +231,21 @@ public class EmployeeManagedBean
         return employeeManagement.createEmployee(dtoToAdd);
     }
     
+    public boolean getEmployeeDetails()
+    {
+        if (employeeid == null)
+            return false;
+
+        EmployeeDTO employee = employeeManagement.getEmployeeDetails(employeeid);
+        
+        if (employee == null)
+            return false;
+
+        updateClientFields(employee);
+        
+        return true;
+    }
+    
     //Asks the EmployeeFacadeRemote bean to return a DTO with restricted fields left unset.
     //These include: active, employeeID, password, and rolegroup.
     private boolean getLimitedEmployeeDetails()
@@ -243,13 +258,13 @@ public class EmployeeManagedBean
         if (employee == null)
             return false;
 
-        updateFields(employee);
+        updateClientFields(employee);
         
         return true;
     }
     
     //Sets the fields of this bean with a DTO's details, ready for use by a JSF page
-    private void updateFields(EmployeeDTO details)
+    private void updateClientFields(EmployeeDTO details)
     {
         firstname = details.getFirstname();
         lastname = details.getLastname();
@@ -320,7 +335,7 @@ public class EmployeeManagedBean
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
 
-        return false ? "Admin" : "NoAdmin";
+        return true ? "Admin" : "NoAdmin";
         //employeeid = Integer.parseInt(request.getUserPrincipal().getName());
         
         //return employeeManagement.isAdmin(employeeid);
