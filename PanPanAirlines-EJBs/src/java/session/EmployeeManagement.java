@@ -69,4 +69,10 @@ public class EmployeeManagement implements EmployeeFacadeRemote
     {
         return employeeFacade.getAllEmployees();
     }
+
+    @Override
+    public EmployeeDTO getLimitedEmployeeDetails(Integer employeeID)
+    {
+        return employeeFacade.getLimitedEmployeeDTO(employeeID);
+    }
 }

@@ -52,6 +52,21 @@ public class EmployeeDTO
         this.passwordplain = null;
     }
 
+    //Secure constructor to not set password, ID, rolegroup, and active fields that standard users do not need to see
+    public EmployeeDTO(String firstname, String lastname, String address, String phone, String email, String username)
+    {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.username = username;
+        employeeid = null;
+        rolegroup = null;
+        active = null;
+        passwordplain = null;
+    }
+
     public Integer getEmployeeid()
     {
         return employeeid;

@@ -28,7 +28,6 @@ public class EmployeeManagedBean
     @EJB
     private EmployeeFacadeRemote employeeManagement;
     
-    
     private Integer employeeid = null;
     private String firstname = null;
     private String lastname = null;
@@ -180,10 +179,25 @@ public class EmployeeManagedBean
         if (admin)
             employees = employeeManagement.getAllEmployees();
         
+        //If not admin, then get the details only needed for standard users (ie, not role group, active, and others)
+        //Also, if this method returns false, then a critical error occurred (should not technically be possible).
+        else if (!getLimitedEmployeeDetails())
+            return "Error";
+        
         return isAdmin();
     }
     public String prepareForEmployeeUpdate()
     {
+        boolean admin = isAdmin().equals("Admin");
+        
+        if (!admin)
+            //Sets the client fields of this bean for standard users
+            if (!getLimitedEmployeeDetails())
+            {
+                //If failed due to unknown reason
+                return "Error";
+            }
+        
         return isAdmin();
     } 
     public String prepareForEmployeeDelete()
@@ -226,32 +240,51 @@ public class EmployeeManagedBean
         return employeeManagement.createEmployee(dtoToAdd);
     }
     
-    
-    public boolean findEmployee()
+    public boolean getEmployeeDetails()
     {
         if (employeeid == null)
             return false;
-        
+
         EmployeeDTO employee = employeeManagement.getEmployeeDetails(employeeid);
         
         if (employee == null)
             return false;
-        
-        displayDetails(employee);
+
+        updateClientFields(employee);
         
         return true;
     }
     
-    private void displayDetails(EmployeeDTO details)
+    //Asks the EmployeeFacadeRemote bean to return a DTO with restricted fields left unset.
+    //These include: active, employeeID, password, and rolegroup.
+    private boolean getLimitedEmployeeDetails()
     {
-        employeeid = details.getEmployeeid();
+        if (employeeid == null)
+            return false;
+
+        EmployeeDTO employee = employeeManagement.getLimitedEmployeeDetails(employeeid);
+        
+        if (employee == null)
+            return false;
+
+        updateClientFields(employee);
+        
+        return true;
+    }
+    
+    //Sets the fields of this bean with a DTO's details, ready for use by a JSF page
+    private void updateClientFields(EmployeeDTO details)
+    {
         firstname = details.getFirstname();
         lastname = details.getLastname();
         address = details.getAddress();
         phone = details.getPhone();
-        rolegroup = details.getRolegroup();
         email = details.getEmail();
         username = details.getUsername();
+        
+        //These details will not be set if getLimitedEmployeeDetails is called
+        employeeid = details.getEmployeeid();
+        rolegroup = details.getRolegroup();
         active = details.getActive();
     }
     
@@ -290,12 +323,20 @@ public class EmployeeManagedBean
         return employeeManagement.deleteEmployee(employeeid);
     }
     
+    //Sets the employeeID field based on the UserPrinciple of the currently logged in user
     private void setLoggedInID()
     {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
 
-        employeeid = Integer.parseInt(request.getUserPrincipal().getName());
+        try
+        {            
+            employeeid = Integer.parseInt(request.getUserPrincipal().getName());
+        }
+        catch (NumberFormatException e)
+        {
+            employeeid = null;
+        }
     }
     
     private String isAdmin()
@@ -303,7 +344,9 @@ public class EmployeeManagedBean
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
 
-        return true ? "Admin" : "NoAdmin";
+        employeeid = 1;
+        
+        return false ? "Admin" : "NoAdmin";
         //employeeid = Integer.parseInt(request.getUserPrincipal().getName());
         
         //return employeeManagement.isAdmin(employeeid);

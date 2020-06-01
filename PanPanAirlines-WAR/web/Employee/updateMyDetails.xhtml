@@ -6,8 +6,43 @@
         <title>Update My Details</title>
     </h:head>
     <h:body>
-        <h1><h:outputText value = "Manage any employee"/></h1>
+        <h1><h:outputText value = "Update My Details"/></h1>
+            
+        <h:form>
+            <h:inputHidden value= "#{employeeManagedBean.employeeid}"/>
+            <h:panelGrid columns= "2">
+
+                <h:outputLabel value= "First Name:"/>
+                <h:inputText title = "First Name" id = "firstName" required= "true" value="#{employeeManagedBean.firstname}"></h:inputText>
                 
+                <h:outputLabel value= "Last Name:"/>
+                <h:inputText title = "Last Name" id = "lastName" required= "true" value="#{employeeManagedBean.lastname}"></h:inputText>
+                
+                <h:outputLabel value= "Address:"/>
+                <h:inputText title = "Address" id = "address" required= "true" value="#{employeeManagedBean.address}"></h:inputText>
+                
+                <h:outputLabel value= "Phone Number:"/>
+                <h:inputText title = "Phone Number" id = "phoneNumber" required= "true" value="#{employeeManagedBean.phone}"></h:inputText>
+            
+                
+                <h:outputLabel value= "Email:"/>
+                <h:inputText title = "Email" id = "email" required= "true" value="#{employeeManagedBean.email}"></h:inputText>
+                
+                <h:outputLabel value= "Username"/>
+                <h:inputText title = "Username" id = "username" required= "true" value="#{employeeManagedBean.username}"></h:inputText>
+                
+                <h:outputLabel value= "Update Password"/>
+                <h:inputSecret title = "Update password" id = "password" required= "true" value="#{employeeManagedBean.newPassword}"></h:inputSecret>
+                
+                <h:outputLabel value= "Confirm New Password"/>
+                <h:inputSecret title = "Confirm password" id = "confirmPassword" required= "true"></h:inputSecret>
+                
+                
+            </h:panelGrid>
+            
+            <h:commandButton value= "Update" action="#{employeeManagedBean.updateEmployeeDetails()}"/>
+        </h:form> 
+            
         <h:outputLink value= "mainmenu.xhtml">Main Menu</h:outputLink>
     </h:body>
 </html>

@@ -27,14 +27,24 @@
             <to-view-id>/Employee/displayMyDetails.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeView()}</from-action>
+            <from-outcome>Error</from-outcome>
+            <to-view-id>/criticalError.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-action>#{employeeManagedBean.prepareForEmployeeUpdate()}</from-action>
             <from-outcome>Admin</from-outcome>
-            <to-view-id>/Employee/updateAnyDetails.xhtml</to-view-id>
+            <to-view-id>/Employee/getSingleDetails.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-action>#{employeeManagedBean.prepareForEmployeeUpdate()}</from-action>
             <from-outcome>NoAdmin</from-outcome>
             <to-view-id>/Employee/updateMyDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.prepareForEmployeeUpdate()}</from-action>
+            <from-outcome>Error</from-outcome>
+            <to-view-id>/criticalError.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-action>#{employeeManagedBean.prepareForEmployeeDelete()}</from-action>
@@ -70,6 +80,45 @@
         </navigation-case>
         <navigation-case>
             <from-action>#{employeeManagedBean.removeEmployee()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/Employee/getSingleDetails.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.getEmployeeDetails()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/Employee/updateAnyDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.getEmployeeDetails()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/Employee/updateAnyDetails.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.updateEmployeeDetails()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/operationSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.updateEmployeeDetails()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/Employee/updateMyDetails.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.updateEmployeeDetails()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/operationSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.updateEmployeeDetails()}</from-action>
             <from-outcome>false</from-outcome>
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>

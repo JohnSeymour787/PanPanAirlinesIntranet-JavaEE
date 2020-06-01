@@ -10,6 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entity.Employee;
 import entity.EmployeeDTO;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -60,14 +63,14 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             employeeDTO.getEmail(), 
             employeeDTO.getUsername(), 
             employeeDTO.getPasswordplain(),
-            "Encrypted password", 
+            hashPassword(employeeDTO.getPasswordplain()), 
             employeeDTO.getActive()
         );
 
         return result;
     }
     
-        
+    
     @Override
     public Employee find(int id)
     {
@@ -107,22 +110,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
         if (employeeDAO == null)
             return null;
         
-        EmployeeDTO result = new EmployeeDTO
-        (
-            employeeDAO.getEmployeeid(), 
-            employeeDAO.getFirstname(), 
-            employeeDAO.getLastname(), 
-            employeeDAO.getAddress(), 
-            employeeDAO.getPhone(), 
-            employeeDAO.getRolegroup(), 
-            employeeDAO.getEmail(), 
-            employeeDAO.getUsername(),
-            employeeDAO.getPasswordplain(),
-            //employeeDAO.getPasswordencrypted(),
-            employeeDAO.getActive()
-        );
-
-        return result;
+        return daoToDto(employeeDAO);
     }
     
     private EmployeeDTO daoToDto(Employee employee)
@@ -150,19 +138,39 @@ public class EmployeeFacade implements EmployeeFacadeLocal
     {
         if (employee == null)
             return false;
-        
-        if (find(employee.getEmployeeid()) == null)
+
+        Employee dao = find(employee.getEmployeeid());
+        if (dao == null)
             return false;
-        
+
         try
         {
-            editAll(dtoToDAO(employee));
+            //Only updating the fields that should be modified
+            dao.setFirstname(employee.getFirstname());
+            dao.setLastname(employee.getLastname());
+            dao.setAddress(employee.getAddress());
+            dao.setPhone(employee.getPhone());
+            dao.setEmail(employee.getEmail());
+            dao.setUsername(employee.getUsername());
+            
+            //If a non-admin is updating their details, these values in the DTO will be null and should not be updated
+            if (employee.getRolegroup() != null)
+                dao.setRolegroup(employee.getRolegroup());
+            if (employee.getActive() != null)
+                dao.setActive(employee.getActive());
+            
+            //Only if the client sends a valid password here update the old one
+            if (employee.getPasswordplain() != null)
+            {
+                dao.setPasswordplain(employee.getPasswordplain());
+                dao.setPasswordencrypted(hashPassword(employee.getPasswordplain()));
+            }
         }
         catch (Exception e)
         {
             return false;
         }
-        
+
         return true;
     }
 
@@ -223,5 +231,60 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             result.add(daoToDto(employee));
         
         return result;
+    }
+
+    @Override
+    public EmployeeDTO getLimitedEmployeeDTO(Integer employeeID)
+    {
+        Employee employeeDAO = find(employeeID);
+
+        if (employeeDAO == null)
+            return null;
+        
+        EmployeeDTO result = new EmployeeDTO
+        ( 
+            employeeDAO.getFirstname(), 
+            employeeDAO.getLastname(), 
+            employeeDAO.getAddress(), 
+            employeeDAO.getPhone(), 
+            employeeDAO.getEmail(), 
+            employeeDAO.getUsername()
+        );
+
+        return result;
+    }
+    
+    //Hashes the string parameter with an SHA-256 encryption
+    private static String hashPassword(String password)
+    {
+        try
+        {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        
+            return bytesToHex(encodedhash);
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            
+        }
+        
+        return "Error in hashing!";
+    }
+
+    //Converts an array of byte types to a hexadecimal-represented string type
+    private static String bytesToHex(byte[] hash)
+    {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++)
+        {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if (hex.length() == 1)
+            {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }
