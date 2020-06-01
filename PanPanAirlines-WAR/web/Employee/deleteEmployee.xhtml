@@ -9,10 +9,13 @@
         <h1><h:outputText value = "Manage any employee"/></h1>
         
         <h:form>
-            <h:outputText value= "Enter employee ID to remove (does not permanently delete):"/>
-            <h:inputText id = "employeeID" required= "true" value="#{employeeManagedBean.employeeid}"></h:inputText>
+            <h:panelGrid columns= "1">
+                
+                <h:outputText value= "Enter employee ID to remove (does not permanently delete):"/>
+                <h:inputText id = "employeeID" required= "true" value="#{employeeManagedBean.employeeid}"></h:inputText>
             
-            <h:commandButton value= "Remove" action= "#{employeeManagedBean.removeEmployee()}"/>
+                <h:commandButton value= "Remove" action= "#{employeeManagedBean.removeEmployee()}"/>
+            </h:panelGrid>
         </h:form>
     </h:body>
 </html>

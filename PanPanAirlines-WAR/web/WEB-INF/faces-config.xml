@@ -47,6 +47,7 @@
             <to-view-id>/accessDenied.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/Employee/add.xhtml</from-view-id>
         <navigation-case>
@@ -56,6 +57,19 @@
         </navigation-case>
         <navigation-case>
             <from-action>#{employeeManagedBean.addEmployee()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/Employee/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/Employee/deleteEmployee.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.removeEmployee()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/Employee/operationSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{employeeManagedBean.removeEmployee()}</from-action>
             <from-outcome>false</from-outcome>
             <to-view-id>/Employee/operationFailed.xhtml</to-view-id>
         </navigation-case>
