@@ -6,6 +6,7 @@
 package session;
 
 import entity.EmployeeDTO;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -50,5 +51,22 @@ public class EmployeeManagement implements EmployeeFacadeRemote
     public boolean validatePassword(String passwordPlain, String passwordConfirm)
     {
         return false;
+    }
+
+    @Override
+    public boolean isAdmin(Integer employeeID)
+    {
+        EmployeeDTO temp = employeeFacade.getEmployeeDetails(employeeID);
+        
+        if (temp == null)
+            return false;
+        else
+            return temp.getRolegroup().equals("Admin");
+    }
+
+    @Override
+    public List<EmployeeDTO> getAllEmployees()
+    {
+        return employeeFacade.getAllEmployees();
     }
 }

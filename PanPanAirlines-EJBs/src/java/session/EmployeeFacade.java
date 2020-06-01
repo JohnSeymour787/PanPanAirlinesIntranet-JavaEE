@@ -11,6 +11,8 @@ import javax.persistence.PersistenceContext;
 import entity.Employee;
 import entity.EmployeeDTO;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -46,7 +48,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
     private Employee dtoToDAO(EmployeeDTO employeeDTO)
     {
         Employee result;
-        
+
         result = new Employee
         (
             employeeDTO.getEmployeeid(), 
@@ -57,11 +59,11 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             employeeDTO.getRolegroup(), 
             employeeDTO.getEmail(), 
             employeeDTO.getUsername(), 
-            employeeDTO.getPasswordplain(), 
-            employeeDTO.getPasswordencrypted(), 
+            employeeDTO.getPasswordplain(),
+            "Encrypted password", 
             employeeDTO.getActive()
         );
-    
+
         return result;
     }
     
@@ -81,6 +83,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
         if (employee == null)
             return false;
         
+        //Check that employee does not already exist with this ID
         if (find(employee.getEmployeeid()) != null)
             return false;
         
@@ -125,7 +128,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
     private EmployeeDTO daoToDto(Employee employee)
     {
         if (employee == null) return null;
-        
+
         EmployeeDTO result = new EmployeeDTO
         (
             employee.getEmployeeid(), 
@@ -136,11 +139,9 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             employee.getRolegroup(), 
             employee.getEmail(), 
             employee.getUsername(),
-            employee.getPasswordplain(),
-            //employeeDAO.getPasswordencrypted(),
             employee.getActive()
         );
-        
+
         return result;
     }
 
@@ -205,6 +206,21 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             if (DTOElement != null)
                 result.add(DTOElement);
         }
+        
+        return result;
+    }
+
+    @Override
+    public List<EmployeeDTO> getAllEmployees()
+    {
+        //Finding all employee DAOs in the DB
+        Query query = em.createNamedQuery("Employee.findAll");
+        List<Employee> daoArray = new ArrayList<>(query.getResultList());
+        
+        List<EmployeeDTO> result = new ArrayList<>();
+        
+        for (Employee employee : daoArray)
+            result.add(daoToDto(employee));
         
         return result;
     }

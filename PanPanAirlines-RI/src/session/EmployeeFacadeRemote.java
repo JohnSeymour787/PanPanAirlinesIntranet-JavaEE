@@ -7,6 +7,7 @@ package session;
 
 import javax.ejb.Remote;
 import entity.EmployeeDTO;
+import java.util.List;
 /**
  *
  * @author John
@@ -23,4 +24,8 @@ public interface EmployeeFacadeRemote
     boolean deleteEmployee(int id);
 
     boolean validatePassword(String passwordPlain, String passwordConfirm);
+
+    boolean isAdmin(Integer employeeID);
+
+    List<EmployeeDTO> getAllEmployees();
 }
