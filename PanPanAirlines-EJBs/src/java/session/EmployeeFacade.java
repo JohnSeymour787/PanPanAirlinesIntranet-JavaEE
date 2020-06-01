@@ -118,7 +118,6 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             employeeDAO.getEmail(), 
             employeeDAO.getUsername(),
             employeeDAO.getPasswordplain(),
-            //employeeDAO.getPasswordencrypted(),
             employeeDAO.getActive()
         );
 
@@ -222,6 +221,27 @@ public class EmployeeFacade implements EmployeeFacadeLocal
         for (Employee employee : daoArray)
             result.add(daoToDto(employee));
         
+        return result;
+    }
+
+    @Override
+    public EmployeeDTO getLimitedEmployeeDTO(Integer employeeID)
+    {
+        Employee employeeDAO = find(employeeID);
+
+        if (employeeDAO == null)
+            return null;
+        
+        EmployeeDTO result = new EmployeeDTO
+        ( 
+            employeeDAO.getFirstname(), 
+            employeeDAO.getLastname(), 
+            employeeDAO.getAddress(), 
+            employeeDAO.getPhone(), 
+            employeeDAO.getEmail(), 
+            employeeDAO.getUsername()
+        );
+
         return result;
     }
 }

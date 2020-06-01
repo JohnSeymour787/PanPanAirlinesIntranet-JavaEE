@@ -28,4 +28,6 @@ public interface EmployeeFacadeRemote
     boolean isAdmin(Integer employeeID);
 
     List<EmployeeDTO> getAllEmployees();
+
+    EmployeeDTO getLimitedEmployeeDetails(Integer employeeID);
 }

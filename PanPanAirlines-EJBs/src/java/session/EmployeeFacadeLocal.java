@@ -33,4 +33,6 @@ public interface EmployeeFacadeLocal
     ArrayList<EmployeeDTO> employeeIDsToDTOs(int[] employeeIDs);
 
     List<EmployeeDTO> getAllEmployees();
+
+    EmployeeDTO getLimitedEmployeeDTO(Integer employeeID);
 }
