@@ -139,4 +139,30 @@
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/FlightCrew/getCrewID.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.findCrewDetails()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/FlightCrew/displayCrewDetails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.findCrewDetails()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/FlightCrew/createCrew.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.createCrew()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/operationSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.createCrew()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

@@ -10,28 +10,36 @@
         <h2><h:outputText value = "Select Option"/></h2>
         <ul>
             <li>
-                <h:form>
-                    <h:commandButton value = "Add Employee" action="#{employeeManagedBean.prepareForEmployeeAdd()}"/>
-                </h:form>
+                <h:outputLink value="createCrew.xhtml">
+                    Create a new flight crew
+                </h:outputLink>
             </li>
             <li>
+                <h:outputLink value="addEmployeeToCrew.xhtml">
+                    Add an employee to an existing flight crew
+                </h:outputLink>
+            </li>
+            
+            <li>
+                <h:outputLink value="getCrewID.xhtml">
+                    View the details of a flight crew
+                </h:outputLink>
+            </li>
+            
+            <li>
                 <h:form>
-                    <h:commandButton value = "View Details" action="#{employeeManagedBean.prepareForEmployeeView()}"/>
+                    <h:commandButton value = "Update a flight crew" action="#{employeeManagedBean.prepareForEmployeeUpdate()}"/>
                 </h:form>
             </li>
             
             <li>
                 <h:form>
-                    <h:commandButton value = "Update Details" action="#{employeeManagedBean.prepareForEmployeeUpdate()}"/>
-                </h:form>
-            </li>
-            
-            <li>
-                <h:form>
-                    <h:commandButton value = "Remove Employee" action="#{employeeManagedBean.prepareForEmployeeDelete()}"/>
+                    <h:commandButton value = "Delete a flight crew" action="#{employeeManagedBean.prepareForEmployeeDelete()}"/>
                 </h:form>
             </li>
         </ul>
+        
+        <h:outputLink value= "../index.xhtml">Return to features menu</h:outputLink>.
     </h:body>
 </html>
 

@@ -20,9 +20,9 @@ public class FlightCrewManagement implements FlightCrewManagementRemote
     private FlightCrewFacadeLocal flightCrewFacade;
     
     @Override
-    public boolean createFlightCrew(FlightCrewDTO flightCrew)
+    public boolean createFlightCrew(int id, int crewID, int firstEmployeeID)
     {
-        return flightCrewFacade.createFlightCrew(flightCrew);
+        return flightCrewFacade.createFlightCrew(id, crewID, firstEmployeeID);
     }
 
     @Override

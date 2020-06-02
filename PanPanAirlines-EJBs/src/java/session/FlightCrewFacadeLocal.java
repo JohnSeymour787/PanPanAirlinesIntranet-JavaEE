@@ -18,9 +18,9 @@ public interface FlightCrewFacadeLocal
 {
     Flightcrew findCrewDAO(Integer id);
     
-    FlightCrewDTO findFlightCrew(int id);
+    FlightCrewDTO findFlightCrew(int crewID);
     
-    boolean createFlightCrew(FlightCrewDTO flightCrew);
+    boolean createFlightCrew(int id, int crewID, int firstEmployeeID);
     
     boolean updateFlightCrew(FlightCrewDTO flightCrew);
     

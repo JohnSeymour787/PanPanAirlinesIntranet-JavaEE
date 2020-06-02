@@ -5,11 +5,12 @@
  */
 package web;
 
+import entity.EmployeeDTO;
 import entity.FlightCrewDTO;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import session.FlightCrewManagementRemote;
 
@@ -27,13 +28,12 @@ public class FlightCrewManagedBean implements Serializable
 
     private int crewid;
     private int id;
-    private String employees;
-    //private EmployeeDTO employees;
+    private int employeeID;
+    private List<EmployeeDTO> employees;
     
     
     public FlightCrewManagedBean()
     {
-        
     }
 
     public int getCrewid()
@@ -56,26 +56,32 @@ public class FlightCrewManagedBean implements Serializable
         this.id = id;
     }
 
-    public String getEmployees()
+    public int getEmployeeID()
+    {
+        return employeeID;
+    }
+
+    public void setEmployeeID(int employeeID)
+    {
+        this.employeeID = employeeID;
+    }
+
+    public List<EmployeeDTO> getEmployees()
     {
         return employees;
     }
 
-    public void setEmployees(String employees)
+    public void setEmployees(List<EmployeeDTO> employees)
     {
         this.employees = employees;
     }
+
     
-    public boolean AddFlight()
-    {
-        //FlightCrewDTO toAdd;// = new FlightCrewDTO(crewid, id, employees);
-        //toAdd = new FlightCrewDTO(crewid, id, employees);
-        
-        
-        
-        //flightCrewManagement.createFlightCrew(toAdd);
-        return false;
+    public boolean createCrew()
+    {      
+        return flightCrewManagement.createFlightCrew(id, crewid, employeeID);
     }
+    
     /*
         TODO:
         -Need to do something with returned flightCrew local variable
@@ -83,11 +89,20 @@ public class FlightCrewManagedBean implements Serializable
     
     public boolean findCrewDetails()
     {
-        FlightCrewDTO flightCrew = flightCrewManagement.findFlightCrew(id);
-        
+        FlightCrewDTO flightCrew = flightCrewManagement.findFlightCrew(crewid);
+
         if (flightCrew == null)
             return false;
-        else
-            return true;
+
+        employees = flightCrew.getEmployees();
+        crewid = flightCrew.getCrewid();
+        id = flightCrew.getId();
+        
+        return true;
+    }
+    
+    public boolean addEmployeeToCrew()
+    {
+        return false;
     }
 }

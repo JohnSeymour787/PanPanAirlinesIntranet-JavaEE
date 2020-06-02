@@ -1,8 +1,3 @@
-/*
-    ToDo:
-    -Delete password encrypted code
-    -
-*/
 package entity;
 
 /**
@@ -33,7 +28,6 @@ public class EmployeeDTO
         this.email = email;
         this.username = username;
         this.passwordplain = passwordplain;
-        //this.passwordencrypted = passwordencrypted;
         this.active = active;
     }
 
@@ -112,19 +106,8 @@ public class EmployeeDTO
         return passwordplain;
     }
 
-
-
     public Boolean getActive()
     {
         return active;
-    }
-    
-    
-    //****************************************************************** TO REMOVE****************************//
-    //****************************************************************** TO REMOVE****************************//
-    //****************************************************************** TO REMOVE****************************//
-    public String getPasswordencrypted()
-    {
-        return "";
     }
 }

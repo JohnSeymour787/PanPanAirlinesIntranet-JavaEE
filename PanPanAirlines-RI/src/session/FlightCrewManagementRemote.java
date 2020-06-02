@@ -14,7 +14,7 @@ import entity.FlightCrewDTO;
 @Remote
 public interface FlightCrewManagementRemote
 {
-    boolean createFlightCrew(FlightCrewDTO flightCrew);
+    boolean createFlightCrew(int id, int crewID, int firstEmployeeID);
 
     FlightCrewDTO findFlightCrew(int id);
 
