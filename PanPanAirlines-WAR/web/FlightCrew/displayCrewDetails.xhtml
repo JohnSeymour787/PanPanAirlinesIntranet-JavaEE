@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>View Employee Details</title>
+    </h:head>
+    <h:body>
+        <h1><h:outputText value = "View all employees"/></h1>
+
+        <h:dataTable value = "#{employeeManagedBean.employees}" var = "employee">
+            <h:column>
+                <f:facet name = "header">Employee ID</f:facet>
+                <h:outputText title = "Employee ID" value= "#{employee.employeeid}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">First Name</f:facet>
+                <h:outputText title = "First Name" value= "#{employee.firstname}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Last Name</f:facet>
+                <h:outputText title = "Last Name" value= "#{employee.lastname}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Address</f:facet>
+                <h:outputText title = "Address" value= "#{employee.address}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Phone</f:facet>
+                <h:outputText title = "Phone" value= "#{employee.phone}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Role</f:facet>
+                <h:outputText title = "Role" value= "#{employee.rolegroup}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Email</f:facet>
+                <h:outputText title = "Email" value= "#{employee.email}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Username</f:facet>
+                <h:outputText title = "Username" value= "#{employee.username}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Active</f:facet>
+                <h:outputText title = "Active" value= "#{employee.active}"/>
+            </h:column>
+        </h:dataTable>
+        
+        <h:outputLink value= "mainmenu.xhtml">Main Menu</h:outputLink>
+        
+    </h:body>
+</html>
+

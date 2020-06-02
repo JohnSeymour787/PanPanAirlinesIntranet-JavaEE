@@ -344,11 +344,8 @@ public class EmployeeManagedBean
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
 
-        employeeid = 1;
+        employeeid = Integer.parseInt(request.getUserPrincipal().getName());
         
-        return false ? "Admin" : "NoAdmin";
-        //employeeid = Integer.parseInt(request.getUserPrincipal().getName());
-        
-        //return employeeManagement.isAdmin(employeeid);
+        return employeeManagement.isAdmin(employeeid) ? "Admin" : "NoAdmin";
     }
 }

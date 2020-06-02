@@ -123,4 +123,20 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{logoutManagedBean.logout()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/authorisationFailed.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{logoutManagedBean.logout()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>
