@@ -7,22 +7,49 @@
         <title>Add Employee To Flight Crew</title>
     </h:head>
     <h:body>
-        <h1><h:outputText value = "Add an employee to a crew"/></h1>
+        <h1><h:outputText value = "Modify a Crew"/></h1>
 
         <h:form>
+            <h:inputHidden id = "crewID" value="#{flightCrewManagedBean.crewid}"/>
+            <h:inputHidden id = "ID" value="#{flightCrewManagedBean.id}"/>
+            
             <h:panelGrid columns= "2">
                 <h:outputLabel value= "Crew ID:"/>
-                <h:inputText title = "The ID representing a unique crew" id = "crewID" required= "true" value="#{flightCrewManagedBean.crewid}"></h:inputText>
+                <h:outputText title = "The ID representing a unique crew" value="#{flightCrewManagedBean.crewid}"></h:outputText>
                 
-                <h:outputLabel value= "First Employee to add:"/>
-                <h:inputText title = "employeeID" id = "employeeID" required= "true" value="#{flightCrewManagedBean.employeeID}"></h:inputText>
-            
                 <h:outputLabel value= "Unique ID for DB record:"/>
-                <h:inputText title = "ID" id = "ID" required= "true" value="#{flightCrewManagedBean.id}"></h:inputText>
-            
+                <h:outputText title = "ID" value="#{flightCrewManagedBean.id}"></h:outputText>
             </h:panelGrid>
             
+            
+            <h:outputText value="Employees in this crew:"/>
+            <h:dataTable value = "#{flightCrewManagedBean.employees}" var = "employee">
+                <h:column>
+                    <f:facet name = "header">First Name</f:facet>
+                    <h:outputText title = "First Name" value= "#{employee.firstname}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name = "header">Last Name</f:facet>
+                    <h:outputText title = "Last Name" value= "#{employee.lastname}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name = "header">Role</f:facet>
+                    <h:outputText title = "Role" value= "#{employee.rolegroup}"/>
+                </h:column>
+            </h:dataTable>
+            <h:panelGrid columns="2">
+                <h:outputLabel value= "Add Employee to this crew:"/>
+                <h:inputText title = "Employee ID of the new employee to add" value="#{flightCrewManagedBean.employeeID}"></h:inputText>
+                
+                <h:outputLabel value= "Add unique ID for the DB record"/>
+                <h:inputText title = "Unique ID for this employee in the FlightCrew table" value="#{flightCrewManagedBean.id}"></h:inputText>
+       
+            </h:panelGrid>
+                
             <h:commandButton value= "Add" action="#{flightCrewManagedBean.addEmployeeToCrew()}"/>
+            <h:commandButton value= "Save Changes to database" action="#{flightCrewManagedBean.saveListToDB()}"/>
         </h:form>
         
         

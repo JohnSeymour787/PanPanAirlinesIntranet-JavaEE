@@ -56,12 +56,7 @@ public class EmployeeManagement implements EmployeeFacadeRemote
     @Override
     public boolean isAdmin(Integer employeeID)
     {
-        EmployeeDTO temp = employeeFacade.getEmployeeDetails(employeeID);
-        
-        if (temp == null)
-            return false;
-        else
-            return temp.getRolegroup().equals("Admin");
+        return employeeFacade.isAdmin(employeeID);
     }
 
     @Override

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package session;
 
 import entity.EmployeeDTO;
@@ -13,6 +8,7 @@ import entity.Flightcrew;
 import entity.FlightCrewDTO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.persistence.Query;
 /**
@@ -27,14 +23,12 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
     @EJB
     private EmployeeFacadeLocal employeeFacade;
     
+    private FlightCrewDTO crew;
+    private List<Integer> IDList;
+    private Integer initialEmployeesCount;
+    
     private void createCrew(Flightcrew flight) throws Exception
     {
-        System.out.println("Flight DAO details");
-        System.out.println("ID" + flight.getId());
-        System.out.println("Crew ID " + flight.getCrewid());
-        System.out.println("Emp ID" + flight.getEmployeeid());
-        
-        
         em.persist(flight);
     }
     
@@ -77,16 +71,11 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
         //return result;
     }
     
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
-    
-    
     @Override
-    public boolean createFlightCrew(int id, int crewID, int firstEmployeeID)
+    public boolean createFlightCrew(int id, int crewID, int employeeID)
     {
         //Getting the employee from the Employee table and making sure it exists
-        EmployeeDTO employee = employeeFacade.getEmployeeDetails(firstEmployeeID);
+        EmployeeDTO employee = employeeFacade.getEmployeeDetails(employeeID);
         if (employee == null)
             return false;
 
@@ -100,7 +89,7 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
         if (!crewIDArray.isEmpty())
             return false;
         
-        Flightcrew flightCrew = new Flightcrew(id, crewID, firstEmployeeID);
+        Flightcrew flightCrew = new Flightcrew(id, crewID, employeeID);
 
         try
         {
@@ -116,12 +105,11 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
     
     private ArrayList<Flightcrew> getAllForCrewID(Integer crewID)
     {
-        System.out.println("session.FlightCrewFacade.getAllForCrewID()");
         //Finding all Flightcrew DAOs with the same, shared CrewID field
-        //Query query = em.createNamedQuery("Flightcrew.findAll");//.setParameter("crewid", crewID);
         Query query = em.createNamedQuery("Flightcrew.findByCrewid").setParameter("crewid", crewID);
-        System.out.println("query string is: " + query.toString());
+        
         ArrayList<Flightcrew> result;
+        
         try
         {
             result = new ArrayList<>(query.getResultList());
@@ -129,7 +117,6 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
         }
         catch (Exception e)
         {
-            System.out.println("Error in query get result list");
             e.printStackTrace();
             return null;
         }
@@ -140,27 +127,23 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
     @Override
     public FlightCrewDTO findFlightCrew(int crewID)
     {
-        System.out.println("session.FlightCrewFacade.findFlightCrew()");
         try
         {
             //Getting all DB records with the crew 
             ArrayList<Flightcrew> daoArray = getAllForCrewID(crewID);
             
-            System.out.println("Got DAO array. Is array empty:" + daoArray.isEmpty());
             if (daoArray.isEmpty())
                 return null;
-            System.out.println("1.");
+
             //Extracting all employeeIDs from the Flightcrew DAOs.
             int[] employeeIDs = new int[daoArray.size()];
             
             for (int i = 0; i < employeeIDs.length; i++)
                 employeeIDs[i] = daoArray.get(i).getEmployeeid();
 
-            System.out.println("2.");
             //EmployeeFacade will convert an array of empIDs to an ArrayList of DTOs.
             ArrayList<EmployeeDTO> employeesDTOList = employeeFacade.employeeIDsToDTOs(employeeIDs);
 
-            System.out.println("3.");
             //Can now create the FlightCrewDTO with the list of employeeDTOs
             FlightCrewDTO result = new FlightCrewDTO
             (
@@ -169,6 +152,9 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
                 employeesDTOList
             );
 
+            //Saving to the stateful bean's field in case it will be updated
+            crew = result;
+            
             return result;
         }
         catch (Exception e)
@@ -220,4 +206,90 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
     {
         return findCrewDAO(id) != null;
     }
+
+    @Override
+    public boolean isAdmin(Integer employeeID)
+    {
+        return employeeFacade.isAdmin(employeeID);
+    }
+
+    @Override
+    public List<EmployeeDTO> addEmployeeToCrew(Integer employeeID, Integer id)
+    {
+        //Crew DTO with the employees and crewID should exist before adding to the employees list
+        if (crew == null)
+            return null;
+        
+        //The current unique DB ID should not exist, either for this crewID or another
+        if (crewExists(id))
+            return null;
+        
+        //Get the EmployeeDTO from the ID
+        EmployeeDTO toAdd = employeeFacade.getEmployeeDetails(employeeID);
+        
+        //If employee doesn't exist in the employees DB, then should not continue
+        if (toAdd == null)
+            return null;
+        
+        //Checking that this employee is not already in the crew list
+        for (EmployeeDTO emp : crew.getEmployees())
+            if (Objects.equals(emp.getEmployeeid(), toAdd.getEmployeeid()))
+                return null;
+        
+        //If this is the first new employee to add to the list
+        if (IDList == null)
+        {
+            //Create a new list to record the unique IDs to add
+            IDList = new ArrayList<>();
+            //Record the number of employees that were already in this crew
+            initialEmployeesCount = crew.getEmployees().size();
+        }
+        
+        //Add the employeeDTO to the crew list
+        crew.getEmployees().add(toAdd);
+        //Add the unique ID to the ID list
+        IDList.add(id);
+        
+        //Return the list for the client to update their page of the temporaray changes to this crew list.
+        return crew.getEmployees();
+    }
+
+    //Saves the employees in the 'crew' field and the unique DB IDs to the FlightCrew DB table
+    @Override
+    public boolean saveListToDB()
+    {
+        //Cannot save list if doesn't exist
+        if (crew == null)
+            return false;
+        
+        //Need to start the index at 1 element after the last employee that was already in the list from the DB, originally.
+        int unaddedEmployeesIndex = initialEmployeesCount;
+        int IDListIndex = 0;
+        
+        //New FlightCrew DAO to add to the DB table
+        Flightcrew newTableRecord;
+               
+        //For each new employee in the temp crew list, get the corresponding unique ID for it, create a DAO, and attempt to add
+        //it to the DB
+        while (unaddedEmployeesIndex < crew.getEmployees().size())
+        {
+            newTableRecord = new Flightcrew(IDList.get(IDListIndex), crew.getCrewid(), crew.getEmployees().get(unaddedEmployeesIndex).getEmployeeid());
+        
+            try
+            {
+                createCrew(newTableRecord);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            
+            unaddedEmployeesIndex++;
+            IDListIndex++;
+        }
+        
+        return true;
+    }
+    
+    
 }

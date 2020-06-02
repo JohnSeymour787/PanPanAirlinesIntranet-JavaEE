@@ -5,8 +5,10 @@
  */
 package session;
 
+import entity.EmployeeDTO;
 import javax.ejb.Remote;
 import entity.FlightCrewDTO;
+import java.util.List;
 /**
  *
  * @author John
@@ -21,4 +23,10 @@ public interface FlightCrewManagementRemote
     boolean updateFlightCrew(FlightCrewDTO flightCrew);
 
     boolean deleteFlightCrew(int id);   
+
+    boolean isAdmin(Integer employeeID);
+
+    List<EmployeeDTO> addEmployeeToCrew(Integer employeeID, Integer id);
+
+    boolean saveListToDB();
 }

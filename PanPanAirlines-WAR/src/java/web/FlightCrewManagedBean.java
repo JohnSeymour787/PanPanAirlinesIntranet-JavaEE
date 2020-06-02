@@ -12,6 +12,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import session.FlightCrewManagementRemote;
 
 /**
@@ -26,9 +28,9 @@ public class FlightCrewManagedBean implements Serializable
     @EJB
     private FlightCrewManagementRemote flightCrewManagement;
 
-    private int crewid;
-    private int id;
-    private int employeeID;
+    private Integer crewid;
+    private Integer id;
+    private Integer employeeID;
     private List<EmployeeDTO> employees;
     
     
@@ -36,32 +38,32 @@ public class FlightCrewManagedBean implements Serializable
     {
     }
 
-    public int getCrewid()
+    public Integer getCrewid()
     {
         return crewid;
     }
 
-    public void setCrewid(int crewid)
+    public void setCrewid(Integer crewid)
     {
         this.crewid = crewid;
     }
 
-    public int getId()
+    public Integer getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
 
-    public int getEmployeeID()
+    public Integer getEmployeeID()
     {
         return employeeID;
     }
 
-    public void setEmployeeID(int employeeID)
+    public void setEmployeeID(Integer employeeID)
     {
         this.employeeID = employeeID;
     }
@@ -75,34 +77,45 @@ public class FlightCrewManagedBean implements Serializable
     {
         this.employees = employees;
     }
-
     
     public boolean createCrew()
     {      
         return flightCrewManagement.createFlightCrew(id, crewid, employeeID);
     }
-    
-    /*
-        TODO:
-        -Need to do something with returned flightCrew local variable
-    */
-    
-    public boolean findCrewDetails()
+
+    public String findCrewDetails()
     {
         FlightCrewDTO flightCrew = flightCrewManagement.findFlightCrew(crewid);
 
         if (flightCrew == null)
-            return false;
+            return "Error";
 
         employees = flightCrew.getEmployees();
         crewid = flightCrew.getCrewid();
-        id = flightCrew.getId();
         
-        return true;
+        return isAdmin() ? "Admin" : "NoAdmin";
+    }
+    
+    private boolean isAdmin()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
+
+        Integer employeeid = Integer.parseInt(request.getUserPrincipal().getName());
+        
+        return flightCrewManagement.isAdmin(employeeid);
     }
     
     public boolean addEmployeeToCrew()
     {
-        return false;
+        employees = flightCrewManagement.addEmployeeToCrew(employeeID, id);
+        employeeID = null;
+        id = null;
+        return employees != null;
+    }
+    
+    public boolean saveListToDB()
+    {
+        return flightCrewManagement.saveListToDB();
     }
 }

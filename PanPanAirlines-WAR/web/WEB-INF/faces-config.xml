@@ -143,12 +143,17 @@
         <from-view-id>/FlightCrew/getCrewID.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{flightCrewManagedBean.findCrewDetails()}</from-action>
-            <from-outcome>true</from-outcome>
+            <from-outcome>Admin</from-outcome>
+            <to-view-id>/FlightCrew/addEmployeeToCrew.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.findCrewDetails()}</from-action>
+            <from-outcome>NoAdmin</from-outcome>
             <to-view-id>/FlightCrew/displayCrewDetails.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-action>#{flightCrewManagedBean.findCrewDetails()}</from-action>
-            <from-outcome>false</from-outcome>
+            <from-outcome>Error</from-outcome>
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -161,6 +166,29 @@
         </navigation-case>
         <navigation-case>
             <from-action>#{flightCrewManagedBean.createCrew()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/FlightCrew/addEmployeeToCrew.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.addEmployeeToCrew()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/FlightCrew/addEmployeeToCrew.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.addEmployeeToCrew()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/operationFailed.xhtml</to-view-id>
+        </navigation-case>
+                <navigation-case>
+            <from-action>#{flightCrewManagedBean.saveListToDB()}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/operationSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{flightCrewManagedBean.saveListToDB()}</from-action>
             <from-outcome>false</from-outcome>
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>

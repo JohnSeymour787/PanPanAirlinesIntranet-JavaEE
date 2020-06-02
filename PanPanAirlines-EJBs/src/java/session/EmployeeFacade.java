@@ -205,7 +205,7 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             return null;
         
         ArrayList<EmployeeDTO> result = new ArrayList<>();
-        EmployeeDTO DTOElement = null;
+        EmployeeDTO DTOElement;
         
         for (int employeeID : employeeIDs)
         {
@@ -286,5 +286,16 @@ public class EmployeeFacade implements EmployeeFacadeLocal
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    @Override
+    public boolean isAdmin(Integer employeeID)
+    {
+        EmployeeDTO employee = getEmployeeDetails(employeeID);
+        
+        if (employee == null)
+            return false;
+        else
+            return employee.getRolegroup().equals("Admin");
     }
 }
