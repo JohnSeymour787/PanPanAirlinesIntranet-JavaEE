@@ -1,8 +1,3 @@
-/*
-    ToDo:
-    -Delete encrypted password code
-    -Also need to determine whether to include plain password as well
-*/
 package web;
 
 import entity.EmployeeDTO;
@@ -154,17 +149,7 @@ public class EmployeeManagedBean
     {
         this.newPassword = newPassword;
     }
-/*
-    public String getConfirmedPassword()
-    {
-        return confirmedPassword;
-    }
-
-    public void setConfirmedPassword(String confirmedPassword)
-    {
-        this.confirmedPassword = confirmedPassword;
-    }
-*/
+    
     //Need this 4 different methods all doing the same thing for Employee/mainmenu.xhtml buttons to send the client
     //to the correct page, through faces-config naviagation cases.
     public String prepareForEmployeeAdd()
@@ -311,10 +296,7 @@ public class EmployeeManagedBean
             context.addMessage(component.getClientId(context), message);
         }
     }
-    
-    //Update employee password
-    
-    
+
     public boolean removeEmployee()
     {
         if (employeeid == null)
