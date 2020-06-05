@@ -27,12 +27,7 @@
         <location>/authorisationFailed.xhtml</location>
     </error-page>
     <security-constraint>
-        <display-name>Admins</display-name>
-        <web-resource-collection>
-            <web-resource-name>AdminOnly</web-resource-name>
-            <description/>
-            <url-pattern>/faces/*</url-pattern>
-        </web-resource-collection>
+        <display-name>AllUsers</display-name>
         <web-resource-collection>
             <web-resource-name>Employee</web-resource-name>
             <description/>
@@ -43,6 +38,34 @@
             <role-name>Admin</role-name>
             <role-name>Pilot</role-name>
             <role-name>FlightAttendant</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Admins</display-name>
+        <web-resource-collection>
+            <web-resource-name>AdminOnly</web-resource-name>
+            <description/>
+            <url-pattern>/faces/FlightCrew/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>NonAdmins</display-name>
+        <web-resource-collection>
+            <web-resource-name>NonAdminPages</web-resource-name>
+            <description/>
+            <url-pattern>/faces/FlightCrew/getCrewID.xhtml</url-pattern>
+            <url-pattern>/faces/FlightCrew/displayCrewDetails.xhtml</url-pattern>
+            <url-pattern>/faces/FlightCrew/mainmenu.xhtml</url-pattern>
+            <url-pattern>/faces/authorisationFailed.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>FlightAttendant</role-name>
+            <role-name>Pilot</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
