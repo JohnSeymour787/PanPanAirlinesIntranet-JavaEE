@@ -173,6 +173,7 @@ public class EmployeeManagedBean
     }
     public String prepareForEmployeeUpdate()
     {
+        //Any call to isAdmin() updates the employeeID field of this bean automatically
         boolean admin = isAdmin().equals("Admin");
         
         if (!admin)

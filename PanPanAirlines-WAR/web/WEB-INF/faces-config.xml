@@ -71,6 +71,7 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/Employee/deleteEmployee.xhtml</from-view-id>
         <navigation-case>
@@ -84,6 +85,7 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/Employee/getSingleDetails.xhtml</from-view-id>
         <navigation-case>
@@ -97,6 +99,7 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/Employee/updateAnyDetails.xhtml</from-view-id>
         <navigation-case>
@@ -110,6 +113,7 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/Employee/updateMyDetails.xhtml</from-view-id>
         <navigation-case>
@@ -123,6 +127,7 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
@@ -131,6 +136,7 @@
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/authorisationFailed.xhtml</from-view-id>
         <navigation-case>
@@ -139,6 +145,9 @@
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
+    
+    
     <navigation-rule>
         <from-view-id>/FlightCrew/getCrewID.xhtml</from-view-id>
         <navigation-case>
@@ -157,6 +166,7 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/FlightCrew/createCrew.xhtml</from-view-id>
         <navigation-case>
@@ -170,6 +180,7 @@
             <to-view-id>/operationFailed.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <from-view-id>/FlightCrew/addEmployeeToCrew.xhtml</from-view-id>
         <navigation-case>

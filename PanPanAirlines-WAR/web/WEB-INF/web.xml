@@ -62,11 +62,6 @@
             <url-pattern>/faces/FlightCrew/mainmenu.xhtml</url-pattern>
             <url-pattern>/faces/authorisationFailed.xhtml</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>FlightAttendant</role-name>
-            <role-name>Pilot</role-name>
-        </auth-constraint>
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>

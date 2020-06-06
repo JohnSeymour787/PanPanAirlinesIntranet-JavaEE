@@ -20,10 +20,6 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class LogoutManagedBean implements Serializable
 {
-
-    /**
-     * Creates a new instance of LogoutManagedBean
-     */
     public LogoutManagedBean()
     {
     }
