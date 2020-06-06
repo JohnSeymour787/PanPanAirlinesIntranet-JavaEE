@@ -35,4 +35,6 @@ public interface EmployeeFacadeLocal
     List<EmployeeDTO> getAllEmployees();
 
     EmployeeDTO getLimitedEmployeeDTO(Integer employeeID);
+
+    boolean isAdmin(Integer employeeID);
 }

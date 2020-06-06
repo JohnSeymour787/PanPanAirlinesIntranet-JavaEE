@@ -1,8 +1,3 @@
-/*
-    ToDo:
-    -Delete encrypted password code
-    -Also need to determine whether to include plain password as well
-*/
 package web;
 
 import entity.EmployeeDTO;
@@ -154,17 +149,7 @@ public class EmployeeManagedBean
     {
         this.newPassword = newPassword;
     }
-/*
-    public String getConfirmedPassword()
-    {
-        return confirmedPassword;
-    }
-
-    public void setConfirmedPassword(String confirmedPassword)
-    {
-        this.confirmedPassword = confirmedPassword;
-    }
-*/
+    
     //Need this 4 different methods all doing the same thing for Employee/mainmenu.xhtml buttons to send the client
     //to the correct page, through faces-config naviagation cases.
     public String prepareForEmployeeAdd()
@@ -188,6 +173,7 @@ public class EmployeeManagedBean
     }
     public String prepareForEmployeeUpdate()
     {
+        //Any call to isAdmin() updates the employeeID field of this bean automatically
         boolean admin = isAdmin().equals("Admin");
         
         if (!admin)
@@ -311,10 +297,7 @@ public class EmployeeManagedBean
             context.addMessage(component.getClientId(context), message);
         }
     }
-    
-    //Update employee password
-    
-    
+
     public boolean removeEmployee()
     {
         if (employeeid == null)
@@ -344,11 +327,8 @@ public class EmployeeManagedBean
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
 
-        employeeid = 1;
+        employeeid = Integer.parseInt(request.getUserPrincipal().getName());
         
-        return false ? "Admin" : "NoAdmin";
-        //employeeid = Integer.parseInt(request.getUserPrincipal().getName());
-        
-        //return employeeManagement.isAdmin(employeeid);
+        return employeeManagement.isAdmin(employeeid) ? "Admin" : "NoAdmin";
     }
 }

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>View Flight Crew Details</title>
+    </h:head>
+    <h:body>
+        <h1><h:outputText value = "Details for the Flight Crew are:"/></h1>
+
+        <h:panelGrid columns="2">
+            <h:outputText value="CrewID: "/>
+            <h:outputText value="#{flightCrewManagedBean.crewid}"/>
+        </h:panelGrid>
+        <h:outputText value="All crew members are: "/>
+        <h:dataTable value = "#{flightCrewManagedBean.employees}" var = "employee">
+            <h:column>
+                <f:facet name = "header">First Name</f:facet>
+                <h:outputText title = "First Name" value= "#{employee.firstname}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Last Name</f:facet>
+                <h:outputText title = "Last Name" value= "#{employee.lastname}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Role</f:facet>
+                <h:outputText title = "Role" value= "#{employee.rolegroup}"/>
+            </h:column>
+        </h:dataTable>
+        
+        <h:outputLink value= "mainmenu.xhtml">Main Menu</h:outputLink>
+        
+    </h:body>
+</html>
+

@@ -44,9 +44,6 @@ public class EmployeeManagement implements EmployeeFacadeRemote
         return employeeFacade.deleteEmployee(id);
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
     @Override
     public boolean validatePassword(String passwordPlain, String passwordConfirm)
     {
@@ -56,12 +53,7 @@ public class EmployeeManagement implements EmployeeFacadeRemote
     @Override
     public boolean isAdmin(Integer employeeID)
     {
-        EmployeeDTO temp = employeeFacade.getEmployeeDetails(employeeID);
-        
-        if (temp == null)
-            return false;
-        else
-            return temp.getRolegroup().equals("Admin");
+        return employeeFacade.isAdmin(employeeID);
     }
 
     @Override

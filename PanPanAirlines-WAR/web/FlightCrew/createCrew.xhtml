@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Create New Flight Crew</title>
+    </h:head>
+    <h:body>
+        <h1><h:outputText value = "Create a new Crew"/></h1>
+        <h2><h:outputText value = "Enter details"/></h2>
+        
+        <h:form>
+            <h:panelGrid columns= "2">
+                <h:outputLabel value= "Crew ID:"/>
+                <h:inputText title = "The unique ID number for this crew" id = "employeeID" required= "true" value="#{flightCrewManagedBean.crewid}"></h:inputText>
+                
+                <h:outputLabel value= "First Employee to add:"/>
+                <h:inputText title = "employeeID" id = "firstName" required= "true" value="#{flightCrewManagedBean.employeeID}"></h:inputText>
+                
+                <h:outputLabel value= "ID:"/>
+                <h:inputText title = "The unique ID number for the DB record" id = "ID" required= "true" value="#{flightCrewManagedBean.id}"></h:inputText>
+            </h:panelGrid>
+            
+            <h:commandButton value= "Add" action="#{flightCrewManagedBean.createCrew()}"/>
+        </h:form>
+        
+        
+        <h:outputLink value= "mainmenu.xhtml">Main Menu</h:outputLink>
+        
+    </h:body>
+</html>
+

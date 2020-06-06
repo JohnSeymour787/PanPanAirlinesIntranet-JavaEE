@@ -14,13 +14,13 @@
                 </h:outputLink>
             </li>
             <li>
-                <h:outputLink value = "faces/Employee/mainmenu.xhtml" >
-                    Scheduled Flights
+                <h:outputLink value = "faces/FlightCrew/mainmenu.xhtml" >
+                    Crew Management
                 </h:outputLink>
             </li>
             <li>
                 <h:outputLink value = "faces/Employee/mainmenu.xhtml" >
-                    Crew Management
+                    Scheduled Flights
                 </h:outputLink>
             </li>
             <li>
@@ -29,6 +29,13 @@
                 </h:outputLink>
             </li>
         </ul>
+        
+        <p>
+            <h:form>
+                <h:commandButton value = "Logout" action="#{logoutManagedBean.logout()}"/>
+            </h:form>
+        </p>
+        
     </h:body>
 </html>
 

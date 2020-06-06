@@ -5,7 +5,9 @@
  */
 package session;
 
+import entity.EmployeeDTO;
 import entity.FlightCrewDTO;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
@@ -20,9 +22,9 @@ public class FlightCrewManagement implements FlightCrewManagementRemote
     private FlightCrewFacadeLocal flightCrewFacade;
     
     @Override
-    public boolean createFlightCrew(FlightCrewDTO flightCrew)
+    public boolean createFlightCrew(int id, int crewID, int firstEmployeeID)
     {
-        return flightCrewFacade.createFlightCrew(flightCrew);
+        return flightCrewFacade.createFlightCrew(id, crewID, firstEmployeeID);
     }
 
     @Override
@@ -42,4 +44,22 @@ public class FlightCrewManagement implements FlightCrewManagementRemote
     {
         return flightCrewFacade.deleteFlightCrew(id);
     } 
+
+    @Override
+    public boolean isAdmin(Integer employeeID)
+    {
+        return flightCrewFacade.isAdmin(employeeID);
+    }
+
+    @Override
+    public List<EmployeeDTO> addEmployeeToCrew(Integer employeeID, Integer id)
+    {
+        return flightCrewFacade.addEmployeeToCrew(employeeID, id);
+    }
+
+    @Override
+    public boolean saveListToDB()
+    {
+        return flightCrewFacade.saveListToDB();
+    }
 }

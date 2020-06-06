@@ -5,8 +5,10 @@
  */
 package session;
 
+import entity.EmployeeDTO;
 import entity.Flightcrew;
 import entity.FlightCrewDTO;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -18,9 +20,9 @@ public interface FlightCrewFacadeLocal
 {
     Flightcrew findCrewDAO(Integer id);
     
-    FlightCrewDTO findFlightCrew(int id);
+    FlightCrewDTO findFlightCrew(int crewID);
     
-    boolean createFlightCrew(FlightCrewDTO flightCrew);
+    boolean createFlightCrew(int id, int crewID, int firstEmployeeID);
     
     boolean updateFlightCrew(FlightCrewDTO flightCrew);
     
@@ -29,4 +31,10 @@ public interface FlightCrewFacadeLocal
     boolean crewExists(int id);
     
     //Flightcrew dtoToDAO(FlightCrewDTO flightCrew);
+
+    boolean isAdmin(Integer employeeID);
+
+    List<EmployeeDTO> addEmployeeToCrew(Integer employeeID, Integer id);
+
+    boolean saveListToDB();
 }
