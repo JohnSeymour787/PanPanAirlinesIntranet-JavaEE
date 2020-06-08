@@ -10,7 +10,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import session.EmployeeFacadeRemote;
+import session.EmployeeManagementRemote;
 
 /**
  *
@@ -21,7 +21,7 @@ import session.EmployeeFacadeRemote;
 public class EmployeeManagedBean
 {
     @EJB
-    private EmployeeFacadeRemote employeeManagement;
+    private EmployeeManagementRemote employeeManagement;
     
     private Integer employeeid = null;
     private String firstname = null;
@@ -50,12 +50,12 @@ public class EmployeeManagedBean
         this.employees = employees;
     }
 
-    public EmployeeFacadeRemote getEmployeeManagement()
+    public EmployeeManagementRemote getEmployeeManagement()
     {
         return employeeManagement;
     }
 
-    public void setEmployeeManagement(EmployeeFacadeRemote employeeManagement)
+    public void setEmployeeManagement(EmployeeManagementRemote employeeManagement)
     {
         this.employeeManagement = employeeManagement;
     }
@@ -241,7 +241,7 @@ public class EmployeeManagedBean
         return true;
     }
     
-    //Asks the EmployeeFacadeRemote bean to return a DTO with restricted fields left unset.
+    //Asks the EmployeeManagementRemote bean to return a DTO with restricted fields left unset.
     //These include: active, employeeID, password, and rolegroup.
     private boolean getLimitedEmployeeDetails()
     {

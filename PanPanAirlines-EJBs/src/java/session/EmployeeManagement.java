@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
  * @author John
  */
 @Stateless
-public class EmployeeManagement implements EmployeeFacadeRemote
+public class EmployeeManagement implements EmployeeManagementRemote
 {
     @EJB
     private EmployeeFacadeLocal employeeFacade;
