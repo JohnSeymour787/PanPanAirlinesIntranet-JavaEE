@@ -13,7 +13,7 @@ import java.util.List;
  * @author John
  */
 @Remote
-public interface EmployeeFacadeRemote
+public interface EmployeeManagementRemote
 {
     boolean createEmployee(EmployeeDTO employee);
 

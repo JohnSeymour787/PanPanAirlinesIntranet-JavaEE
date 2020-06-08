@@ -290,6 +290,4 @@ public class FlightCrewFacade implements FlightCrewFacadeLocal
         
         return true;
     }
-    
-    
 }
